@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>關西 8天7夜行程｜2026/12/24–12/31</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#1a1a2e;--sub:#4a4a6a;--mute:#8888a0;--border:#d4d4e0;
+  --bg:#f7f6f3;--card:#fff;--accent:#2d5a7b;--accent-light:#e8f0f6;
+  --warm:#c45d3e;--warm-light:#fdf0ec;--tag-kyoto:#5b7e5f;--tag-tango:#2d5a7b;--tag-osaka:#9b5c2e;
+  --font-serif:'Noto Serif TC',serif;--font-sans:'Noto Sans TC',sans-serif;
+  --max-w:780px;
+}
+html{scroll-behavior:smooth;font-size:15px}
+body{font-family:var(--font-sans);color:var(--ink);background:var(--bg);line-height:1.75;-webkit-font-smoothing:antialiased}
+.topbar{position:sticky;top:0;z-index:1000;background:rgba(247,246,243,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+.topbar-inner{max-width:var(--max-w);margin:0 auto;display:flex;align-items:center;gap:12px;padding:10px 20px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.topbar-inner::-webkit-scrollbar{display:none}
+.topbar-inner a{white-space:nowrap;font-size:.8rem;font-weight:500;color:var(--sub);text-decoration:none;padding:5px 10px;border-radius:6px;transition:background .15s,color .15s;flex-shrink:0}
+.topbar-inner a:hover,.topbar-inner a:focus{background:var(--accent-light);color:var(--accent)}
+.topbar-inner a.brand{font-family:var(--font-serif);font-weight:700;font-size:.95rem;color:var(--ink);padding-left:0}
+.hero{max-width:var(--max-w);margin:0 auto;padding:56px 20px 40px;text-align:center}
+.hero h1{font-family:var(--font-serif);font-size:2rem;font-weight:700;letter-spacing:.02em;line-height:1.35;margin-bottom:12px}
+.hero .dates{font-size:1.1rem;color:var(--sub);margin-bottom:20px}
+.hero .note{display:inline-block;background:var(--warm-light);color:var(--warm);font-size:.82rem;padding:8px 16px;border-radius:8px;line-height:1.6;max-width:600px;text-align:left}
+.overview{max-width:var(--max-w);margin:0 auto 32px;padding:0 20px}
+.overview h2{font-family:var(--font-serif);font-size:1.25rem;margin-bottom:16px}
+.ov-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px}
+.ov-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px;position:relative;transition:box-shadow .2s}
+.ov-card:hover{box-shadow:0 4px 16px rgba(0,0,0,.06)}
+.ov-card .day-num{font-family:var(--font-serif);font-size:1.6rem;font-weight:700;color:var(--accent);line-height:1}
+.ov-card .day-date{font-size:.75rem;color:var(--mute);margin:4px 0 8px}
+.ov-card .day-title{font-size:.85rem;font-weight:500;line-height:1.4}
+.ov-card .tag{position:absolute;top:10px;right:10px;font-size:.6rem;font-weight:600;padding:2px 7px;border-radius:4px;color:#fff}
+.tag-kyoto{background:var(--tag-kyoto)}.tag-tango{background:var(--tag-tango)}.tag-osaka{background:var(--tag-osaka)}.tag-move{background:var(--mute)}
+.content{max-width:var(--max-w);margin:0 auto;padding:0 20px 60px}
+.day-section{margin-bottom:48px;scroll-margin-top:56px}
+.day-header{display:flex;align-items:baseline;gap:12px;margin-bottom:6px;flex-wrap:wrap}
+.day-header .label{font-family:var(--font-serif);font-size:1.5rem;font-weight:700;color:var(--accent)}
+.day-header .theme{font-size:1rem;color:var(--sub)}
+.day-meta{font-size:.82rem;color:var(--mute);margin-bottom:20px}
+.tbl-wrap{overflow-x:auto;margin:16px 0;border-radius:10px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:.82rem;min-width:560px}
+thead{background:var(--accent);color:#fff}
+th{padding:10px 12px;text-align:left;font-weight:500;white-space:nowrap}
+td{padding:9px 12px;border-top:1px solid var(--border);vertical-align:top}
+tbody tr:nth-child(even){background:rgba(0,0,0,.015)}
+tbody tr:hover{background:var(--accent-light)}
+.info-block{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:18px 20px;margin:14px 0}
+.info-block h4{font-family:var(--font-serif);font-size:.95rem;font-weight:600;margin-bottom:8px;color:var(--ink)}
+.info-block p,.info-block li{font-size:.85rem;color:var(--sub);line-height:1.7}
+.info-block ul{padding-left:18px}
+.info-block li{margin-bottom:4px}
+.warn{border-left:3px solid var(--warm);background:var(--warm-light)}
+.warn h4{color:var(--warm)}
+.alt{border-left:3px solid var(--accent);background:var(--accent-light)}
+.compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:16px 0}
+@media(max-width:600px){.compare-grid{grid-template-columns:1fr}}
+.compare-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:18px 20px}
+.compare-card h4{font-family:var(--font-serif);font-size:.95rem;margin-bottom:10px}
+.compare-card .row{display:flex;justify-content:space-between;font-size:.82rem;padding:5px 0;border-bottom:1px solid var(--border)}
+.compare-card .row:last-child{border-bottom:none}
+.compare-card .row .lbl{color:var(--mute);flex-shrink:0;margin-right:8px}
+.compare-card .row .val{text-align:right;color:var(--ink)}
+.appendix{max-width:var(--max-w);margin:0 auto;padding:0 20px 80px}
+.appendix-section{margin-bottom:40px;scroll-margin-top:56px}
+.appendix-section h2{font-family:var(--font-serif);font-size:1.25rem;font-weight:700;margin-bottom:16px;padding-bottom:8px;border-bottom:2px solid var(--accent)}
+.checklist{list-style:none;counter-reset:ck}
+.checklist li{counter-increment:ck;position:relative;padding:10px 12px 10px 40px;font-size:.85rem;color:var(--sub);border-bottom:1px solid var(--border)}
+.checklist li::before{content:counter(ck);position:absolute;left:10px;top:10px;width:22px;height:22px;border-radius:50%;background:var(--accent);color:#fff;font-size:.7rem;font-weight:600;display:flex;align-items:center;justify-content:center}
+.foot{text-align:center;padding:24px 20px;font-size:.75rem;color:var(--mute);border-top:1px solid var(--border);max-width:var(--max-w);margin:0 auto}
+/* MAP */
+.day-map{width:100%;height:280px;border-radius:10px;border:1px solid var(--border);margin:16px 0;z-index:1}
+.numbered-marker{background:var(--accent);color:#fff;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;border:2px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.3)}
+.leaflet-popup-content{font-family:var(--font-sans);font-size:13px;line-height:1.5}
+.leaflet-popup-content strong{font-family:var(--font-serif)}
+@media(max-width:600px){
+  html{font-size:14px}
+  .hero h1{font-size:1.5rem}
+  .ov-grid{grid-template-columns:repeat(auto-fill,minmax(140px,1fr))}
+  .day-header .label{font-size:1.2rem}
+  .day-map{height:220px}
+}
+</style>
+</head>
+<body>
+
+<nav class="topbar"><div class="topbar-inner">
+  <span class="brand" style="cursor:default">冬の關西</span>
+  <a onclick="document.getElementById('day1').scrollIntoView({behavior:'smooth'});return false" href="javascript:void(0)">D1</a>
+  <a onclick="document.getElementById('day2').scrollIntoView({behavior:'smooth'});return false" href="javascript:void(0)">D2</a>
+  <a onclick="document.getElementById('day3').scrollIntoView({behavior:'smooth'});return false" href="javascript:void(0)">D3</a>
+  <a onclick="document.getElementById('day4').scrollIntoView({behavior:'smooth'});return false" href="javascript:void(0)">D4</a>
+  <a onclick="document.getElementById('day5').scrollIntoView({behavior:'smooth'});return false" href="javascript:void(0)">D5</a>
+  <a onclick="document.getElementById('day6').scrollIntoView({behavior:'smooth'});return false" href="javascript:void(0)">D6</a>
+  <a onclick="document.getElementById('day7').scrollIntoView({behavior:'smooth'});return false" href="javascript:void(0)">D7</a>
+  <a onclick="document.getElementById('day8').scrollIntoView({behavior:'smooth'});return false" href="javascript:void(0)">D8</a>
+  <a onclick="document.getElementById('lodging').scrollIntoView({behavior:'smooth'});return false" href="javascript:void(0)">住宿</a>
+  <a onclick="document.getElementById('tickets').scrollIntoView({behavior:'smooth'});return false" href="javascript:void(0)">票券</a>
+  <a onclick="document.getElementById('risks').scrollIntoView({behavior:'smooth'});return false" href="javascript:void(0)">風險</a>
+  <a onclick="document.getElementById('todo').scrollIntoView({behavior:'smooth'});return false" href="javascript:void(0)">確認清單</a>
+</div></nav>
+
+<header class="hero">
+  <h1>關西 8 天 7 夜<br>冬季行程規劃</h1>
+  <p class="dates">2026 / 12 / 24（四）— 12 / 31（四）　　5 位成人　　KIX 進出</p>
+  <p class="note">⚠️ 本行程涉及 2026 年 12 月底的營業安排，多數尚未公布。以下依 2025–2026 冬季資料推估，標記 ⚠️ 之處需出發前確認。查詢基準日：2026/09/12</p>
+</header>
+
+<section class="overview">
+  <h2>行程總覽</h2>
+  <div class="ov-grid">
+    <div class="ov-card" style="cursor:pointer" onclick="document.getElementById('day1').scrollIntoView({behavior:'smooth'})"><div class="day-num">1</div><div class="day-date">12/24 四</div><div class="day-title">抵達・移動至京都</div><span class="tag tag-kyoto">京都</span></div>
+    <div class="ov-card" style="cursor:pointer" onclick="document.getElementById('day2').scrollIntoView({behavior:'smooth'})"><div class="day-num">2</div><div class="day-date">12/25 五</div><div class="day-title">貴船神社＋鞍馬</div><span class="tag tag-kyoto">京都</span></div>
+    <div class="ov-card" style="cursor:pointer" onclick="document.getElementById('day3').scrollIntoView({behavior:'smooth'})"><div class="day-num">3</div><div class="day-date">12/26 六</div><div class="day-title">嵐山一帶</div><span class="tag tag-kyoto">京都</span></div>
+    <div class="ov-card" style="cursor:pointer" onclick="document.getElementById('day4').scrollIntoView({behavior:'smooth'})"><div class="day-num">4</div><div class="day-date">12/27 日</div><div class="day-title">東山・伏見</div><span class="tag tag-kyoto">京都</span></div>
+    <div class="ov-card" style="cursor:pointer" onclick="document.getElementById('day5').scrollIntoView({behavior:'smooth'})"><div class="day-num">5</div><div class="day-date">12/28 一</div><div class="day-title">京都→天橋立→伊根</div><span class="tag tag-tango">丹後</span></div>
+    <div class="ov-card" style="cursor:pointer" onclick="document.getElementById('day6').scrollIntoView({behavior:'smooth'})"><div class="day-num">6</div><div class="day-date">12/29 二</div><div class="day-title">天橋立→大阪</div><span class="tag tag-move">移動</span></div>
+    <div class="ov-card" style="cursor:pointer" onclick="document.getElementById('day7').scrollIntoView({behavior:'smooth'})"><div class="day-num">7</div><div class="day-date">12/30 三</div><div class="day-title">大阪市區</div><span class="tag tag-osaka">大阪</span></div>
+    <div class="ov-card" style="cursor:pointer" onclick="document.getElementById('day8').scrollIntoView({behavior:'smooth'})"><div class="day-num">8</div><div class="day-date">12/31 四</div><div class="day-title">大阪→關西機場</div><span class="tag tag-osaka">回程</span></div>
+  </div>
+</section>
+
+<main class="content">
+
+<!-- DAY 1 -->
+<section class="day-section" id="day1">
+  <div class="day-header"><span class="label">Day 1</span><span class="theme">12/24（四）抵達・移動至京都</span></div>
+  <p class="day-meta">住宿：京都車站附近（已訂）｜半日行程</p>
+  <div id="map1" class="day-map"></div>
+  <div class="tbl-wrap"><table><thead><tr><th>時間</th><th>地點／活動</th><th>停留</th><th>交通</th><th>車程</th></tr></thead><tbody>
+    <tr><td>15:00</td><td>❶ 關西機場落地</td><td>—</td><td>—</td><td>—</td></tr>
+    <tr><td>~15:40</td><td>通關・提領行李</td><td>40 min</td><td>—</td><td>—</td></tr>
+    <tr><td>~16:00</td><td>搭乘特急 HARUKA</td><td>—</td><td>JR 特急はるか</td><td>約 80 min</td></tr>
+    <tr><td>~17:20</td><td>❷ 京都車站 → Check-in → 晚餐</td><td>—</td><td>徒步</td><td>—</td></tr>
+  </tbody></table></div>
+  <div class="info-block"><h4>交通費用（HARUKA）</h4><p>自由席 ¥3,060／人｜指定席 ¥3,590／人（通常期）。12/24 可能適用繁忙期加 ¥200 ⚠️</p></div>
+  <div class="info-block"><h4>晚餐</h4><p>京都車站大樓拉麵小路（~22:00）或 Porta 地下街。聖誕夜人潮集中，避開需排長隊的名店。</p></div>
+</section>
+
+<!-- DAY 2 -->
+<section class="day-section" id="day2">
+  <div class="day-header"><span class="label">Day 2</span><span class="theme">12/25（五）貴船神社＋鞍馬</span></div>
+  <p class="day-meta">住宿：京都車站附近｜必去：貴船神社</p>
+  <div id="map2" class="day-map"></div>
+  <div class="tbl-wrap"><table><thead><tr><th>時間</th><th>地點／活動</th><th>停留</th><th>交通</th><th>車程</th></tr></thead><tbody>
+    <tr><td>08:30</td><td>❶ 京都車站出發</td><td>—</td><td>JR→京阪→出町柳→叡電</td><td>約 60 min</td></tr>
+    <tr><td>09:40</td><td>❷ <strong>貴船神社</strong>（本宮→結社→奧宮）</td><td>90 min</td><td>巴士＋徒步</td><td>—</td></tr>
+    <tr><td>11:10</td><td>貴船周邊午餐</td><td>60 min</td><td>—</td><td>—</td></tr>
+    <tr><td>12:10</td><td>步行至鞍馬寺（山道）</td><td>—</td><td>徒步</td><td>約 60 min</td></tr>
+    <tr><td>13:10</td><td>❸ <strong>鞍馬寺</strong>（本殿金堂）</td><td>40 min</td><td>—</td><td>—</td></tr>
+    <tr><td>13:50</td><td>返回京都車站</td><td>—</td><td>叡電＋京阪＋JR</td><td>約 60 min</td></tr>
+  </tbody></table></div>
+  <div class="info-block"><h4>貴船神社</h4><ul><li>12 月參拜：6:00–18:00｜授與所 9:00–17:00｜年中無休、免費</li><li>積雪日限定點燈僅 1–2 月週末，12/25 不適用</li></ul></div>
+  <div class="info-block warn"><h4>⚠️ 鞍馬寺＆積雪</h4><ul><li>靈寶殿 12 月中旬起冬季休館，本殿可參拜（入山 ¥500）</li><li>貴船→鞍馬山道冬季可能積雪，建議穿防滑鞋</li></ul></div>
+  <div class="info-block alt"><h4>雨天備案</h4><p>叡電停駛時改排：下鴨神社→出町柳商店街→河原町散策</p></div>
+</section>
+
+<!-- DAY 3 -->
+<section class="day-section" id="day3">
+  <div class="day-header"><span class="label">Day 3</span><span class="theme">12/26（六）嵐山</span></div>
+  <p class="day-meta">住宿：京都車站附近｜竹林・天龍寺・渡月橋</p>
+  <div id="map3" class="day-map"></div>
+  <div class="tbl-wrap"><table><thead><tr><th>時間</th><th>地點／活動</th><th>停留</th><th>交通</th><th>車程</th></tr></thead><tbody>
+    <tr><td>09:00</td><td>京都車站→JR 嵯峨野線</td><td>—</td><td>JR</td><td>16 min</td></tr>
+    <tr><td>09:30</td><td>❶ <strong>竹林の小径</strong></td><td>30 min</td><td>徒步</td><td>—</td></tr>
+    <tr><td>10:00</td><td>❷ <strong>天龍寺</strong></td><td>60 min</td><td>徒步</td><td>—</td></tr>
+    <tr><td>11:00</td><td>❸ <strong>渡月橋</strong>・嵐山商店街</td><td>60 min</td><td>徒步</td><td>—</td></tr>
+    <tr><td>12:00</td><td>嵐山午餐</td><td>60 min</td><td>—</td><td>—</td></tr>
+    <tr><td>13:00</td><td>❹ <strong>常寂光寺</strong></td><td>45 min</td><td>徒步</td><td>—</td></tr>
+    <tr><td>14:00</td><td>返回京都車站</td><td>—</td><td>JR</td><td>16 min</td></tr>
+  </tbody></table></div>
+  <div class="info-block"><h4>景點</h4><ul><li>天龍寺：8:30–17:00，庭園 ¥500＋諸堂 ¥300，年中無休</li><li>常寂光寺：9:00–17:00，¥500 ⚠️ 年末休寺日需確認</li><li>竹林の小径：24h 開放，免費</li></ul></div>
+</section>
+
+<!-- DAY 4 -->
+<section class="day-section" id="day4">
+  <div class="day-header"><span class="label">Day 4</span><span class="theme">12/27（日）東山・伏見</span></div>
+  <p class="day-meta">住宿：京都車站附近｜動線：北→南單向不折返</p>
+  <div id="map4" class="day-map"></div>
+  <div class="tbl-wrap"><table><thead><tr><th>時間</th><th>地點／活動</th><th>停留</th><th>交通</th><th>車程</th></tr></thead><tbody>
+    <tr><td>08:50</td><td>❶ <strong>清水寺</strong></td><td>60 min</td><td>市巴士</td><td>15 min</td></tr>
+    <tr><td>10:00</td><td>❷ 清水坂→二寧坂→<strong>八坂塔</strong></td><td>40 min</td><td>徒步</td><td>—</td></tr>
+    <tr><td>10:40</td><td>❸ <strong>八坂神社</strong>＋圓山公園</td><td>30 min</td><td>徒步</td><td>—</td></tr>
+    <tr><td>11:10</td><td>❹ <strong>祇園花見小路</strong>＋午餐</td><td>90 min</td><td>徒步</td><td>—</td></tr>
+    <tr><td>13:00</td><td>❺ <strong>伏見稻荷大社</strong>（千本鳥居）</td><td>90 min</td><td>京阪電車</td><td>10 min</td></tr>
+    <tr><td>14:30</td><td>回京都車站</td><td>—</td><td>JR 奈良線</td><td>5 min</td></tr>
+  </tbody></table></div>
+  <div class="info-block"><h4>景點</h4><ul><li>清水寺：6:00 開門，¥400，年中無休</li><li>伏見稻荷大社：24h，免費。冬季日落 16:50，建議 14:30 前完成</li></ul></div>
+</section>
+
+<!-- DAY 5 -->
+<section class="day-section" id="day5">
+  <div class="day-header"><span class="label">Day 5</span><span class="theme">12/28（一）京都→天橋立→伊根【移動日】</span></div>
+  <p class="day-meta">住宿：伊根・天橋立周邊（尚未訂）｜必去：伊根舟屋、天橋立</p>
+  <div id="map5" class="day-map"></div>
+  <div class="info-block warn"><h4>⚠️ 交通方式待決定</h4><p>12/28 巴士應適用平日時刻表（12/30–1/3 改假日班次），需向丹後海陸交通確認。</p></div>
+  <h4 style="font-family:var(--font-serif);margin:24px 0 12px">交通方案比較</h4>
+  <div class="compare-grid">
+    <div class="compare-card"><h4>方案 A：大眾運輸</h4><div class="row"><span class="lbl">路線</span><span class="val">特急はしだて＋丹海巴士</span></div><div class="row"><span class="lbl">時間</span><span class="val">~2h10m＋55min</span></div><div class="row"><span class="lbl">費用/人</span><span class="val">¥4,790＋¥400</span></div><div class="row"><span class="lbl">彈性</span><span class="val">低（班次稀疏）</span></div><div class="row"><span class="lbl">優點</span><span class="val">無雪地駕駛風險</span></div><div class="row"><span class="lbl">缺點</span><span class="val">行程被綁死</span></div></div>
+    <div class="compare-card"><h4>方案 B：天橋立站租車</h4><div class="row"><span class="lbl">路線</span><span class="val">特急＋租車自駕至伊根</span></div><div class="row"><span class="lbl">時間</span><span class="val">~2h10m＋40min</span></div><div class="row"><span class="lbl">費用/人</span><span class="val">¥4,790＋~¥2,500</span></div><div class="row"><span class="lbl">彈性</span><span class="val">高（自由移動）</span></div><div class="row"><span class="lbl">優點</span><span class="val">5人分攤便宜、時間自由</span></div><div class="row"><span class="lbl">缺點</span><span class="val">冬季雪地駕駛風險</span></div></div>
+  </div>
+  <div class="tbl-wrap"><table><thead><tr><th>時間</th><th>地點／活動</th><th>停留</th><th>交通</th><th>車程</th></tr></thead><tbody>
+    <tr><td>08:38</td><td>❶ 京都站→特急はしだて</td><td>—</td><td>JR 特急</td><td>2h10m</td></tr>
+    <tr><td>10:45</td><td>❷ 天橋立站（轉巴士或取車）</td><td>—</td><td>—</td><td>—</td></tr>
+    <tr><td>~12:00</td><td>❸ <strong>伊根舟屋散策＋遊覽船</strong></td><td>2.5 h</td><td>巴士/自駕</td><td>40–55 min</td></tr>
+    <tr><td>15:30</td><td>❹ <strong>傘松公園</strong>（纜車・昇龍觀）</td><td>60 min</td><td>纜車</td><td>—</td></tr>
+    <tr><td>18:00</td><td>旅館晚餐（松葉蟹／鰤魚）</td><td>—</td><td>—</td><td>—</td></tr>
+  </tbody></table></div>
+  <div class="info-block"><h4>伊根灣遊覽船</h4><ul><li>9:00–16:00 每 30 分一班，25 分鐘｜¥1,200</li><li>⚠️ 12/28 營運需確認（TEL: 0772-32-0009）</li><li>停駛備案：徒步散策＋海上タクシー（需預約）</li></ul></div>
+</section>
+
+<!-- DAY 6 -->
+<section class="day-section" id="day6">
+  <div class="day-header"><span class="label">Day 6</span><span class="theme">12/29（二）天橋立→大阪【移動日】</span></div>
+  <p class="day-meta">住宿：大阪站 梅田附近（已訂）｜直線移動不折返</p>
+  <div id="map6" class="day-map"></div>
+  <div class="tbl-wrap"><table><thead><tr><th>時間</th><th>地點／活動</th><th>停留</th><th>交通</th><th>車程</th></tr></thead><tbody>
+    <tr><td>09:30</td><td>❶ <strong>天橋立</strong>補完散策</td><td>90 min</td><td>徒步</td><td>—</td></tr>
+    <tr><td>12:35</td><td>❷ 天橋立站→特急はしだて</td><td>—</td><td>JR 特急</td><td>2h10m</td></tr>
+    <tr><td>14:45</td><td>❸ 京都站（轉車＋取行李）</td><td>—</td><td>—</td><td>—</td></tr>
+    <tr><td>15:30</td><td>❹ 大阪站（梅田）Check-in</td><td>—</td><td>JR 新快速</td><td>30 min</td></tr>
+  </tbody></table></div>
+</section>
+
+<!-- DAY 7 -->
+<section class="day-section" id="day7">
+  <div class="day-header"><span class="label">Day 7</span><span class="theme">12/30（三）大阪市區</span></div>
+  <p class="day-meta">住宿：大阪站 梅田附近｜動線：北→南單向</p>
+  <div id="map7" class="day-map"></div>
+  <div class="tbl-wrap"><table><thead><tr><th>時間</th><th>地點／活動</th><th>停留</th><th>交通</th><th>車程</th></tr></thead><tbody>
+    <tr><td>09:30</td><td>❶ 大阪站出發</td><td>—</td><td>JR 環狀線</td><td>15 min</td></tr>
+    <tr><td>09:50</td><td>❷ <strong>大阪城天守閣</strong></td><td>90 min</td><td>徒步</td><td>—</td></tr>
+    <tr><td>11:50</td><td>❸ <strong>黑門市場</strong>（午餐）</td><td>90 min</td><td>地下鐵</td><td>15 min</td></tr>
+    <tr><td>13:40</td><td>❹ <strong>道頓堀＋心齋橋</strong></td><td>90 min</td><td>徒步</td><td>—</td></tr>
+    <tr><td>15:20</td><td>❺ <strong>通天閣（新世界）</strong></td><td>60 min</td><td>地下鐵</td><td>10 min</td></tr>
+  </tbody></table></div>
+  <div class="info-block warn"><h4>⚠️ 大阪城天守閣</h4><p>例年 12/28–1/1 休館。12/30 可能已休館，需確認。若休館改為城公園散步＋豐國神社。</p></div>
+</section>
+
+<!-- DAY 8 -->
+<section class="day-section" id="day8">
+  <div class="day-header"><span class="label">Day 8</span><span class="theme">12/31（四）回程日</span></div>
+  <p class="day-meta">15:00 起飛｜建議 12:30 前抵達機場</p>
+  <div id="map8" class="day-map"></div>
+  <div class="tbl-wrap"><table><thead><tr><th>時間</th><th>地點／活動</th><th>停留</th><th>交通</th><th>車程</th></tr></thead><tbody>
+    <tr><td>09:30</td><td>❶ 梅田輕度散策</td><td>90 min</td><td>徒步</td><td>—</td></tr>
+    <tr><td>11:00</td><td>大阪站→HARUKA</td><td>—</td><td>JR 特急</td><td>50 min</td></tr>
+    <tr><td>11:50</td><td>❷ 關西機場</td><td>—</td><td>—</td><td>—</td></tr>
+    <tr><td>15:00</td><td>起飛</td><td>—</td><td>—</td><td>—</td></tr>
+  </tbody></table></div>
+  <div class="info-block"><h4>交通</h4><p>大阪站→關空 HARUKA 自由席 ~¥1,930 ⚠️｜替代：關空快速 65 min ¥1,210</p></div>
+</section>
+
+</main>
+
+<!-- APPENDICES -->
+<div class="appendix">
+<section class="appendix-section" id="lodging">
+  <h2>附錄｜12/28 丹後住宿建議</h2>
+  <div class="compare-grid" style="grid-template-columns:1fr 1fr 1fr">
+    <div class="compare-card"><h4>A 伊根（舟屋體驗）</h4><div class="row"><span class="lbl">代表</span><span class="val">雅 MIYABI／油屋</span></div><div class="row"><span class="lbl">體驗</span><span class="val">獨一無二的舟屋住宿</span></div><div class="row"><span class="lbl">動線</span><span class="val">隔日需先回天橋立</span></div><div class="row"><span class="lbl">價位</span><span class="val">¥15,000–35,000/人</span></div><div class="row"><span class="lbl">風險</span><span class="val">交通不便・可能休業</span></div></div>
+    <div class="compare-card"><h4>B 天橋立（便利型）</h4><div class="row"><span class="lbl">代表</span><span class="val">文珠莊／天橋立ホテル</span></div><div class="row"><span class="lbl">體驗</span><span class="val">溫泉旅館・選擇多</span></div><div class="row"><span class="lbl">動線</span><span class="val">步行至車站，最佳</span></div><div class="row"><span class="lbl">價位</span><span class="val">¥12,000–25,000/人</span></div><div class="row"><span class="lbl">風險</span><span class="val">低</span></div></div>
+    <div class="compare-card"><h4>C 宮津（折衷型）</h4><div class="row"><span class="lbl">代表</span><span class="val">メルキュール宮津</span></div><div class="row"><span class="lbl">體驗</span><span class="val">西式飯店・價格較低</span></div><div class="row"><span class="lbl">動線</span><span class="val">多一站電車</span></div><div class="row"><span class="lbl">價位</span><span class="val">¥8,000–15,000/人</span></div><div class="row"><span class="lbl">風險</span><span class="val">低</span></div></div>
+  </div>
+</section>
+
+<section class="appendix-section" id="tickets">
+  <h2>附錄｜票券與交通成本比較</h2>
+  <div class="compare-grid">
+    <div class="compare-card"><h4>JR 關西廣域周遊券</h4><div class="row"><span class="lbl">價格</span><span class="val">¥12,000／人（5日）</span></div><div class="row"><span class="lbl">含指定席</span><span class="val">HARUKA・はしだて 等</span></div><div class="row"><span class="lbl">建議啟用</span><span class="val">12/24 或 12/25</span></div><div class="row"><span class="lbl">不含</span><span class="val">叡電・京阪・市巴士</span></div></div>
+    <div class="compare-card"><h4>逐段購票估算</h4><div class="row"><span class="lbl">HARUKA 去</span><span class="val">¥3,590</span></div><div class="row"><span class="lbl">はしだて 去</span><span class="val">¥4,790</span></div><div class="row"><span class="lbl">はしだて 回</span><span class="val">¥4,790</span></div><div class="row"><span class="lbl">京都→大阪</span><span class="val">¥580</span></div><div class="row"><span class="lbl">HARUKA 回</span><span class="val">~¥1,930</span></div><div class="row" style="font-weight:600"><span class="lbl">小計</span><span class="val">~¥15,680</span></div></div>
+  </div>
+  <div class="info-block"><h4>結論</h4><p>周遊券省約 ¥4,000–5,000／人，幾乎必定回本。最佳啟用日 12/24（涵蓋 HARUKA 去程＋はしだて 去程），12/29 回程＋12/31 回程需另購。或改 12/25 啟用涵蓋はしだて來回。</p></div>
+</section>
+
+<section class="appendix-section" id="risks">
+  <h2>附錄｜風險清單</h2>
+  <div class="tbl-wrap"><table><thead><tr><th>風險</th><th>機率</th><th>應對</th></tr></thead><tbody>
+    <tr><td>伊根遊覽船因海況停駛</td><td>中</td><td>改徒步散策＋海上タクシー＋展望台</td></tr>
+    <tr><td>叡山電鐵因積雪停駛</td><td>中低</td><td>改排下鴨神社等京都市區</td></tr>
+    <tr><td>特急はしだて年末滿席</td><td>中高</td><td>提前 1 個月購買指定席</td></tr>
+    <tr><td>大阪城天守閣 12/30 休館</td><td>高</td><td>改城公園散步＋豐國神社</td></tr>
+    <tr><td>黑門市場 12/30 極度擁擠</td><td>高</td><td>10:00 前抵達或改吃他處</td></tr>
+    <tr><td>丹後地區大雪封路</td><td>低中</td><td>提前查氣象；備案改排城崎溫泉</td></tr>
+    <tr><td>貴船餐廳年末休業</td><td>中</td><td>自備便當或改至出町柳用餐</td></tr>
+    <tr><td>12/31 機場人潮</td><td>高</td><td>提前 3 小時到、用自助 Check-in</td></tr>
+  </tbody></table></div>
+</section>
+
+<section class="appendix-section" id="booking">
+  <h2>附錄｜預約清單</h2>
+  <div class="tbl-wrap"><table><thead><tr><th>項目</th><th>何時預約</th><th>備註</th></tr></thead><tbody>
+    <tr><td>12/28 丹後住宿</td><td><strong>立即</strong></td><td>冬季蟹旺季＋年末，伊根容易額滿</td></tr>
+    <tr><td>天橋立租車（方案 B）</td><td><strong>立即</strong></td><td>雪胎車輛有限</td></tr>
+    <tr><td>特急はしだて指定席</td><td>11/24 起</td><td>JR 提前 1 個月</td></tr>
+    <tr><td>高單價晚餐</td><td>出發前 2–4 週</td><td>年末預約難度高</td></tr>
+    <tr><td>貴船午餐</td><td>出發前 2 週</td><td>需確認 12/25 營業</td></tr>
+    <tr><td>海上タクシー</td><td>出發前 1–2 週</td><td>遊覽船停駛 Plan B</td></tr>
+  </tbody></table></div>
+</section>
+
+<section class="appendix-section" id="todo">
+  <h2>附錄｜出發前確認清單</h2>
+  <p style="font-size:.85rem;color:var(--sub);margin-bottom:16px">建議出發前 2–4 週逐項確認：</p>
+  <ol class="checklist">
+    <li>伊根灣遊覽船 12/28 營運狀況（TEL: 0772-32-0009）</li>
+    <li>丹海巴士伊根線 12/28 適用平日或假日時刻表</li>
+    <li>特急はしだて 12/28、12/29 班次時刻</li>
+    <li>天橋立傘松公園纜車、ビューランド年末營業時間</li>
+    <li>貴船神社 12/25 特別開門時間</li>
+    <li>貴船地區餐廳 12/25 營業狀況</li>
+    <li>大阪城天守閣 2026 年末休館日程</li>
+    <li>JR 關西廣域周遊券最新價格</li>
+    <li>天橋立站租車雪胎車輛預約</li>
+    <li>HARUKA 12/24 繁忙期票價</li>
+    <li>京都巴士 33 號冬季運行狀況</li>
+  </ol>
+</section>
+</div>
+
+<footer class="foot">規劃基準日 2026/09/12｜⚠️ 標記處為推估值，出發前請逐項確認</footer>
+
+<script>
+const TILE='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+const ATTR='&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a>';
+
+function numIcon(n,color){
+  return L.divIcon({className:'',html:'<div class="numbered-marker" style="background:'+color+'">'+n+'</div>',iconSize:[28,28],iconAnchor:[14,14],popupAnchor:[0,-16]});
+}
+
+function makeMap(id,spots,color,zoom){
+  const m=L.map(id,{scrollWheelZoom:false}).setView([spots[0].lat,spots[0].lng],zoom||10);
+  L.tileLayer(TILE,{attribution:ATTR,maxZoom:18}).addTo(m);
+  const bounds=[];
+  spots.forEach(function(s,i){
+    const mk=L.marker([s.lat,s.lng],{icon:numIcon(i+1,color)}).addTo(m);
+    mk.bindPopup('<strong>�'+String.fromCharCode(0x2776+i)+' '+s.name+'</strong><br>'+s.note);
+    bounds.push([s.lat,s.lng]);
+  });
+  if(spots.length>1){
+    // draw dashed line
+    L.polyline(bounds,{color:color,weight:2,opacity:.5,dashArray:'6,8'}).addTo(m);
+    m.fitBounds(bounds,{padding:[32,32]});
+  }
+}
+
+// Colors
+const CK='#5b7e5f',CT='#2d5a7b',CO='#9b5c2e',CM='#8888a0';
+
+makeMap('map1',[
+  {lat:34.432,lng:135.2366,name:'關西機場 KIX',note:'15:00 落地'},
+  {lat:34.9859,lng:135.7588,name:'京都車站',note:'~17:20 抵達・Check-in・晚餐'}
+],CM);
+
+makeMap('map2',[
+  {lat:34.9859,lng:135.7588,name:'京都車站',note:'08:30 出發'},
+  {lat:35.1221,lng:135.7629,name:'貴船神社',note:'09:40–11:10 三社巡り'},
+  {lat:35.1181,lng:135.7709,name:'鞍馬寺',note:'13:10–13:50 本殿金堂'}
+],CK,12);
+
+makeMap('map3',[
+  {lat:35.0168,lng:135.6713,name:'竹林の小径',note:'09:30 散策'},
+  {lat:35.0158,lng:135.6738,name:'天龍寺',note:'10:00–11:00 庭園＋諸堂'},
+  {lat:35.0129,lng:135.6778,name:'渡月橋',note:'11:00 嵐山商店街'},
+  {lat:35.0198,lng:135.6686,name:'常寂光寺',note:'13:00 寺院散策'}
+],CK,14);
+
+makeMap('map4',[
+  {lat:34.9947,lng:135.7847,name:'清水寺',note:'08:50–10:00'},
+  {lat:34.9986,lng:135.7792,name:'八坂塔',note:'10:00 二寧坂→產寧坂'},
+  {lat:35.0037,lng:135.7786,name:'八坂神社',note:'10:40–11:10'},
+  {lat:35.0036,lng:135.775,name:'祇園花見小路',note:'11:10 散策＋午餐'},
+  {lat:34.9677,lng:135.7792,name:'伏見稻荷大社',note:'13:00–14:30 千本鳥居'}
+],CK,13);
+
+makeMap('map5',[
+  {lat:34.9859,lng:135.7588,name:'京都車站',note:'08:38 特急はしだて出發'},
+  {lat:35.5574,lng:135.1826,name:'天橋立站',note:'10:45 抵達・轉巴士或取車'},
+  {lat:35.6757,lng:135.2875,name:'伊根舟屋',note:'12:00–14:30 散策＋遊覽船'},
+  {lat:35.5867,lng:135.195,name:'傘松公園',note:'15:30 纜車・昇龍觀'}
+],CT,9);
+
+makeMap('map6',[
+  {lat:35.5574,lng:135.1826,name:'天橋立站',note:'09:30 補完散策'},
+  {lat:34.9859,lng:135.7588,name:'京都站',note:'14:45 轉車＋取行李'},
+  {lat:34.7025,lng:135.496,name:'大阪站（梅田）',note:'15:30 Check-in'}
+],CM,8);
+
+makeMap('map7',[
+  {lat:34.7025,lng:135.496,name:'大阪站',note:'09:30 出發'},
+  {lat:34.6873,lng:135.5259,name:'大阪城天守閣',note:'09:50–11:20'},
+  {lat:34.6654,lng:135.5062,name:'黑門市場',note:'11:50–13:20 午餐'},
+  {lat:34.6686,lng:135.5031,name:'道頓堀',note:'13:40–15:10 散策'},
+  {lat:34.6525,lng:135.5063,name:'通天閣（新世界）',note:'15:20–16:20'}
+],CO,13);
+
+makeMap('map8',[
+  {lat:34.7025,lng:135.496,name:'大阪站',note:'11:00 出發'},
+  {lat:34.432,lng:135.2366,name:'關西機場 KIX',note:'11:50 抵達・15:00 起飛'}
+],CM);
+</script>
+</body>
+</html>
