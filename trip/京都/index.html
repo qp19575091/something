@@ -104,6 +104,7 @@ tbody tr:hover{background:var(--accent-light)}
   <a onclick="document.getElementById('tickets').scrollIntoView({behavior:'smooth'});return false" href="javascript:void(0)">票券</a>
   <a onclick="document.getElementById('risks').scrollIntoView({behavior:'smooth'});return false" href="javascript:void(0)">風險</a>
   <a onclick="document.getElementById('todo').scrollIntoView({behavior:'smooth'});return false" href="javascript:void(0)">確認清單</a>
+  <a onclick="document.getElementById('food').scrollIntoView({behavior:'smooth'});return false" href="javascript:void(0)">美食</a>
 </div></nav>
 
 <header class="hero">
@@ -324,6 +325,51 @@ tbody tr:hover{background:var(--accent-light)}
 </section>
 </div>
 
+<div class="appendix">
+<section class="appendix-section" id="food">
+  <h2>附錄｜Tabelog 高分餐廳地圖</h2>
+  <p style="font-size:.85rem;color:var(--sub);margin-bottom:24px">依 Tabelog 分數篩選，僅列 3.4 以上或百名店。點擊地圖標記看詳情。⚠️ 年末營業與定休日需個別確認。</p>
+
+  <h4 style="font-family:var(--font-serif);margin:20px 0 8px">🟠 大阪燒（お好み焼き）</h4>
+  <div id="map-okonomiyaki" class="day-map" style="height:320px"></div>
+  <div class="tbl-wrap"><table><thead><tr><th>店名</th><th>Tabelog</th><th>區域</th><th>價位</th><th>備註</th></tr></thead><tbody>
+    <tr><td><strong>美津の</strong></td><td>3.70↑</td><td>道頓堀</td><td>¥1,000–2,000</td><td>ミシュラン Bib Gourmand 常連；排隊名店</td></tr>
+    <tr><td><strong>あじくらや</strong></td><td>3.60</td><td>上本町</td><td>¥1,000–3,000</td><td>百名店；自訂組合；觀光客少</td></tr>
+    <tr><td><strong>たまちゃん viva</strong></td><td>3.59</td><td>四ツ橋</td><td>¥4,000–5,000</td><td>百名店；蒸し豚必點；僅晚餐</td></tr>
+    <tr><td><strong>ひろかずや</strong></td><td>3.49</td><td>梅田東通り</td><td>¥1,000–2,000</td><td>營業至凌晨 4:30；現金制</td></tr>
+    <tr><td><strong>きじ</strong></td><td>3.43</td><td>梅田スカイビル B1</td><td>¥1,000–2,000</td><td>名物モダン焼き；木曜定休；離梅田飯店近</td></tr>
+    <tr><td><strong>粉もん處 光圀</strong></td><td>3.46</td><td>裏なんば</td><td>¥3,000–5,000</td><td>百名店；鐵板燒＋お好み焼き</td></tr>
+  </tbody></table></div>
+
+  <h4 style="font-family:var(--font-serif);margin:28px 0 8px">🔴 燒肉（焼肉）</h4>
+  <div id="map-yakiniku" class="day-map" style="height:320px"></div>
+  <div class="tbl-wrap"><table><thead><tr><th>店名</th><th>Tabelog</th><th>區域</th><th>價位</th><th>備註</th></tr></thead><tbody>
+    <tr><td><strong>肉料理荒川</strong></td><td>3.78</td><td>京都河原町</td><td>¥8,000–15,000</td><td>百名店；家族經營老店；水曜定休；Day 4 祇園動線可排</td></tr>
+    <tr><td><strong>りきちゃん 祇園</strong></td><td>3.66</td><td>京都祇園</td><td>¥20,000+</td><td>百名店；高單價；完全預約制</td></tr>
+    <tr><td><strong>うしごろ 梅田</strong></td><td>3.63</td><td>大阪梅田</td><td>¥5,000–15,000</td><td>百名店；グラングリーン大阪 3F；午間套餐 CP 值高</td></tr>
+  </tbody></table></div>
+
+  <h4 style="font-family:var(--font-serif);margin:28px 0 8px">🟤 鰻魚飯（うなぎ）</h4>
+  <div id="map-unagi" class="day-map" style="height:320px"></div>
+  <div class="tbl-wrap"><table><thead><tr><th>店名</th><th>Tabelog</th><th>區域</th><th>價位</th><th>備註</th></tr></thead><tbody>
+    <tr><td><strong>鰻 にしはら</strong></td><td>百名店</td><td>大阪谷町四丁目</td><td>¥4,000–6,000</td><td>僅 9 席；完全預約制；月火定休</td></tr>
+    <tr><td><strong>本家柴藤</strong></td><td>3.69</td><td>大阪淀屋橋</td><td>¥4,000–6,000</td><td>創業 300 年；関西風地焼き；月日定休</td></tr>
+    <tr><td><strong>廣川</strong></td><td>3.68</td><td>京都嵐山</td><td>¥4,000–6,000</td><td>百名店；Day 3 嵐山可排午餐；要預約；月定休</td></tr>
+  </tbody></table></div>
+
+  <h4 style="font-family:var(--font-serif);margin:28px 0 8px">🔵 壽司（寿司）</h4>
+  <div id="map-sushi" class="day-map" style="height:240px"></div>
+  <div class="tbl-wrap"><table><thead><tr><th>店名</th><th>Tabelog</th><th>區域</th><th>價位</th><th>備註</th></tr></thead><tbody>
+    <tr><td><strong>鮨 千陽</strong></td><td>3.6↑</td><td>大阪北新地</td><td>¥12,000–15,000</td><td>赤酢シャリ；午間有較平套餐；Day 7 可安排</td></tr>
+  </tbody></table></div>
+
+  <div class="info-block" style="margin-top:20px">
+    <h4>動線對照建議</h4>
+    <p>京都期間（Day 2–4）：荒川或りきちゃん可安排在 Day 4 東山行程的晚餐；廣川在 Day 3 嵐山午餐順路。大阪期間（Day 7）：きじ和うしごろ離梅田飯店近，適合晚餐收尾；美津の和光圀在道頓堀/難波，Day 7 下午散策順路。</p>
+  </div>
+</section>
+</div>
+
 <footer class="foot">規劃基準日 2026/09/12｜⚠️ 標記處為推估值，出發前請逐項確認</footer>
 
 <script>
@@ -404,6 +450,34 @@ makeMap('map8',[
   {lat:34.7025,lng:135.496,name:'大阪站',note:'11:00 出發'},
   {lat:34.432,lng:135.2366,name:'關西機場 KIX',note:'11:50 抵達・15:00 起飛'}
 ],CM);
+
+// RESTAURANT MAPS
+var CR1='#d35400',CR2='#c0392b',CR3='#7d5a3c',CR4='#2980b9';
+
+makeMap('map-okonomiyaki',[
+  {lat:34.6684,lng:135.5032,name:'美津の',note:'Tabelog 3.70↑｜ミシュラン常連｜道頓堀'},
+  {lat:34.6663,lng:135.5241,name:'あじくらや',note:'Tabelog 3.60｜百名店｜上本町'},
+  {lat:34.6736,lng:135.4926,name:'たまちゃん viva',note:'Tabelog 3.59｜百名店｜四ツ橋｜僅晚餐'},
+  {lat:34.7032,lng:135.5052,name:'ひろかずや 東通り',note:'Tabelog 3.49｜梅田｜營業至凌晨'},
+  {lat:34.7047,lng:135.4906,name:'きじ 梅田スカイビル',note:'Tabelog 3.43｜名物モダン焼き｜木定休'},
+  {lat:34.6653,lng:135.5042,name:'粉もん處 光圀 裏なんば',note:'Tabelog 3.46｜百名店｜難波'}
+],CR1,12);
+
+makeMap('map-yakiniku',[
+  {lat:35.0046,lng:135.7702,name:'肉料理荒川',note:'Tabelog 3.78｜百名店｜京都河原町｜水定休'},
+  {lat:35.0035,lng:135.7745,name:'りきちゃん 祇園',note:'Tabelog 3.66｜百名店｜祇園｜要預約'},
+  {lat:34.7028,lng:135.4934,name:'うしごろ 梅田',note:'Tabelog 3.63｜百名店｜梅田グラングリーン'}
+],CR2,9);
+
+makeMap('map-unagi',[
+  {lat:34.6852,lng:135.5147,name:'鰻 にしはら',note:'Tabelog 百名店｜谷町四丁目｜要預約｜月火休'},
+  {lat:34.69,lng:135.5038,name:'本家柴藤',note:'Tabelog 3.69｜創業300年｜淀屋橋｜月日休'},
+  {lat:35.017,lng:135.6772,name:'廣川',note:'Tabelog 3.68｜百名店｜京都嵐山｜要預約｜月休'}
+],CR3,10);
+
+makeMap('map-sushi',[
+  {lat:34.6976,lng:135.4987,name:'鮨 千陽',note:'Tabelog 3.6↑｜北新地｜おまかせ ¥12,000～'}
+],CR4,14);
 </script>
 </body>
 </html>
