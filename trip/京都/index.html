@@ -76,6 +76,7 @@ tbody tr:hover{background:var(--accent-light)}
 .foot{text-align:center;padding:24px 20px;font-size:.75rem;color:var(--mute);border-top:1px solid var(--border);max-width:var(--max-w);margin:0 auto}
 /* MAP */
 .day-map{width:100%;height:280px;border-radius:10px;border:1px solid var(--border);margin:16px 0;z-index:1}
+.stay-marker{background:var(--card);width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:17px;border:2px solid var(--warm);box-shadow:0 2px 6px rgba(0,0,0,.3)}
 .numbered-marker{background:var(--accent);color:#fff;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;border:2px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.3)}
 .leaflet-popup-content{font-family:var(--font-sans);font-size:13px;line-height:1.5}
 .leaflet-popup-content strong{font-family:var(--font-serif)}
@@ -191,9 +192,10 @@ tbody tr:hover{background:var(--accent-light)}
     <tr><td>10:40</td><td>❸ <strong><a href="https://www.google.com/maps/search/?api=1&query=%E5%85%AB%E5%9D%82%E7%A5%9E%E7%A4%BE" target="_blank" style="color:var(--accent)">八坂神社</a></strong>＋<a href="https://www.google.com/maps/search/?api=1&query=%E5%86%86%E5%B1%B1%E5%85%AC%E5%9C%92+%E4%BA%AC%E9%83%BD" target="_blank" style="color:var(--accent)">圓山公園</a></td><td>30 min</td><td>徒步</td><td>—</td></tr>
     <tr><td>11:10</td><td>❹ <strong><a href="https://www.google.com/maps/search/?api=1&query=%E8%8A%B1%E8%A6%8B%E5%B0%8F%E8%B7%AF%E9%80%9A+%E7%A5%87%E5%9C%92" target="_blank" style="color:var(--accent)">祇園花見小路</a></strong>＋午餐</td><td>90 min</td><td>徒步</td><td>—</td></tr>
     <tr><td>13:00</td><td>❺ <strong><a href="https://www.google.com/maps/search/?api=1&query=%E4%BC%8F%E8%A6%8B%E7%A8%B2%E8%8D%B7%E5%A4%A7%E7%A4%BE" target="_blank" style="color:var(--accent)">伏見稻荷大社</a></strong>（千本鳥居）</td><td>90 min</td><td>京阪電車</td><td>10 min</td></tr>
-    <tr><td>14:30</td><td>回京都車站</td><td>—</td><td>JR 奈良線</td><td>5 min</td></tr>
+    <tr><td>~15:00</td><td>❻ <strong><a href="https://www.google.com/maps/search/?api=1&query=%E4%B8%80%E4%BF%9D%E5%A0%82%E8%8C%B6%E8%88%97+%E4%BA%AC%E9%83%BD%E6%9C%AC%E5%BA%97" target="_blank" style="color:var(--accent)">一保堂茶舗 京都本店</a></strong>（買抹茶）</td><td>30 min</td><td>京阪至三条＋徒步</td><td>約 30 min</td></tr>
+    <tr><td>~15:30</td><td>返回住宿</td><td>—</td><td>地下鐵東西線＋烏丸線（京都市役所前→五条）</td><td>約 15 min</td></tr>
   </tbody></table></div>
-  <div class="info-block"><h4>景點</h4><ul><li>清水寺：6:00 開門，¥400，年中無休</li><li>伏見稻荷大社：24h，免費。冬季日落 16:50，建議 14:30 前完成</li></ul></div>
+  <div class="info-block"><h4>景點</h4><ul><li>清水寺：6:00 開門，¥400，年中無休</li><li>伏見稻荷大社：24h，免費。冬季日落 16:50，建議 14:30 前完成</li><li>一保堂茶舗 京都本店：寺町通二条上ル，京都市役所前站徒步約 5 分；10:00–17:00，第 2 週三及年末年始公休。做拿鐵可選「初昔」（20g ¥864，帶抹茶苦味）或「幾世の昔」（20g ¥1,512）；「宇治清水」已加糖。沒有拿鐵用焙茶粉</li></ul></div>
 </section>
 
 <!-- DAY 5 -->
@@ -311,6 +313,7 @@ tbody tr:hover{background:var(--accent-light)}
   <h2>附錄｜出發前確認清單</h2>
   <p style="font-size:.85rem;color:var(--sub);margin-bottom:16px">建議出發前 2–4 週逐項確認：</p>
   <ol class="checklist">
+    <li>一保堂茶舗 京都本店 12/27 營業（年末年始休業日期）</li>
     <li>伊根灣遊覽船 12/28 營運狀況（TEL: 0772-32-0009）</li>
     <li>丹海巴士伊根線 12/28 適用平日或假日時刻表</li>
     <li>特急はしだて 12/28、12/29 班次時刻</li>
@@ -410,20 +413,31 @@ function numIcon(n,color){
   return L.divIcon({className:'',html:'<div class="numbered-marker" style="background:'+color+'">'+n+'</div>',iconSize:[28,28],iconAnchor:[14,14],popupAnchor:[0,-16]});
 }
 
-function makeMap(id,spots,color,zoom){
+function stayIcon(){
+  return L.divIcon({className:'',html:'<div class="stay-marker">🏠</div>',iconSize:[32,32],iconAnchor:[16,16],popupAnchor:[0,-18]});
+}
+
+const STAY_KYOTO={lat:34.9954,lng:135.7606,name:'文 Aya inn 烏丸五条',note:'住宿 12/24–12/28'};
+const STAY_OSAKA={lat:34.6538,lng:135.4889,name:'八万の宿',note:'住宿 12/29–12/31'};
+
+function makeMap(id,spots,color,zoom,stays){
   const m=L.map(id,{scrollWheelZoom:false}).setView([spots[0].lat,spots[0].lng],zoom||10);
   L.tileLayer(TILE,{attribution:ATTR,maxZoom:18}).addTo(m);
   const bounds=[];
   spots.forEach(function(s,i){
-    const mk=L.marker([s.lat,s.lng],{icon:numIcon(i+1,color)}).addTo(m);
+    const mk=L.marker([s.lat,s.lng],{icon:s.stay?stayIcon():numIcon(i+1,color)}).addTo(m);
     mk.bindPopup('<strong>�'+String.fromCharCode(0x2776+i)+' '+s.name+'</strong><br>'+s.note);
     bounds.push([s.lat,s.lng]);
   });
   if(spots.length>1){
     // draw dashed line
     L.polyline(bounds,{color:color,weight:2,opacity:.5,dashArray:'6,8'}).addTo(m);
-    m.fitBounds(bounds,{padding:[32,32]});
   }
+  (stays||[]).forEach(function(s){
+    L.marker([s.lat,s.lng],{icon:stayIcon()}).addTo(m).bindPopup('<strong>🏠 '+s.name+'</strong><br>'+s.note);
+    bounds.push([s.lat,s.lng]);
+  });
+  if(bounds.length>1) m.fitBounds(bounds,{padding:[32,32]});
 }
 
 // Colors
@@ -432,47 +446,48 @@ const CK='#5b7e5f',CT='#2d5a7b',CO='#9b5c2e',CM='#8888a0';
 makeMap('map1',[
   {lat:34.432,lng:135.2366,name:'關西機場 KIX',note:'15:00 落地'},
   {lat:34.9859,lng:135.7588,name:'京都車站',note:'~17:20 抵達・轉烏丸線'},
-  {lat:34.9954,lng:135.7606,name:'文 Aya inn 烏丸五条',note:'~17:40 Check-in・晚餐'}
+  {lat:34.9954,lng:135.7606,name:'文 Aya inn 烏丸五条',note:'~17:40 Check-in・晚餐',stay:true}
 ],CM);
 
 makeMap('map2',[
   {lat:34.9859,lng:135.7588,name:'京都車站',note:'08:30 出發'},
   {lat:35.1221,lng:135.7629,name:'貴船神社',note:'09:40–11:10 三社巡り'},
   {lat:35.1181,lng:135.7709,name:'鞍馬寺',note:'13:10–13:50 本殿金堂'}
-],CK,12);
+],CK,12,[STAY_KYOTO]);
 
 makeMap('map3',[
   {lat:35.0168,lng:135.6713,name:'竹林の小径',note:'09:30 散策'},
   {lat:35.0158,lng:135.6738,name:'天龍寺',note:'10:00–11:00 庭園＋諸堂'},
   {lat:35.0129,lng:135.6778,name:'渡月橋',note:'11:00 嵐山商店街'},
   {lat:35.0198,lng:135.6686,name:'常寂光寺',note:'13:00 寺院散策'}
-],CK,14);
+],CK,14,[STAY_KYOTO]);
 
 makeMap('map4',[
   {lat:34.9947,lng:135.7847,name:'清水寺',note:'08:50–10:00'},
   {lat:34.9986,lng:135.7792,name:'八坂塔',note:'10:00 二寧坂→產寧坂'},
   {lat:35.0037,lng:135.7786,name:'八坂神社',note:'10:40–11:10'},
   {lat:35.0036,lng:135.775,name:'祇園花見小路',note:'11:10 散策＋午餐'},
-  {lat:34.9677,lng:135.7792,name:'伏見稻荷大社',note:'13:00–14:30 千本鳥居'}
-],CK,13);
+  {lat:34.9677,lng:135.7792,name:'伏見稻荷大社',note:'13:00–14:30 千本鳥居'},
+  {lat:35.0130,lng:135.7672,name:'一保堂茶舗 京都本店',note:'~15:00 買抹茶'}
+],CK,13,[STAY_KYOTO]);
 
 makeMap('map5',[
   {lat:34.9859,lng:135.7588,name:'京都車站',note:'08:38 特急はしだて出發'},
   {lat:35.5574,lng:135.1826,name:'天橋立站',note:'10:45 抵達・轉巴士或取車'},
   {lat:35.6757,lng:135.2875,name:'伊根舟屋',note:'12:00–14:30 散策＋遊覽船'},
   {lat:35.5867,lng:135.195,name:'傘松公園',note:'15:30 纜車・昇龍觀'},
-  {lat:35.5589,lng:135.1812,name:'オーベルジュ天橋立',note:'~17:00 Check-in・晚餐'}
+  {lat:35.5589,lng:135.1812,name:'オーベルジュ天橋立',note:'~17:00 Check-in・晚餐',stay:true}
 ],CT,9);
 
 makeMap('map6',[
   {lat:35.5574,lng:135.1826,name:'天橋立站',note:'09:30 補完散策'},
   {lat:34.9859,lng:135.7588,name:'京都站',note:'14:45 轉車＋取行李'},
   {lat:34.7025,lng:135.496,name:'大阪站（梅田）',note:'15:30 轉環狀線'},
-  {lat:34.6538,lng:135.4889,name:'八万の宿',note:'~16:00 Check-in'}
+  {lat:34.6538,lng:135.4889,name:'八万の宿',note:'~16:00 Check-in',stay:true}
 ],CM,8);
 
 makeMap('map7',[
-  {lat:34.6538,lng:135.4889,name:'八万の宿',note:'09:20 出發（今宮站）'},
+  {lat:34.6538,lng:135.4889,name:'八万の宿',note:'09:20 出發（今宮站）',stay:true},
   {lat:34.6873,lng:135.5259,name:'大阪城天守閣',note:'09:50–11:20'},
   {lat:34.6654,lng:135.5062,name:'黑門市場',note:'11:50–13:20 午餐'},
   {lat:34.6686,lng:135.5031,name:'道頓堀',note:'13:40–15:10 散策'},
@@ -482,7 +497,7 @@ makeMap('map7',[
 makeMap('map8',[
   {lat:34.7025,lng:135.496,name:'大阪站',note:'11:00 出發'},
   {lat:34.432,lng:135.2366,name:'關西機場 KIX',note:'11:50 抵達・15:00 起飛'}
-],CM);
+],CM,undefined,[STAY_OSAKA]);
 
 // RESTAURANT MAPS
 var CR1='#d35400',CR2='#c0392b',CR3='#7d5a3c',CR4='#2980b9';
@@ -535,7 +550,7 @@ makeMap('map-osaka-stay',[
   {lat:34.6499,lng:135.5057,name:'千成屋珈琲',note:'Tabelog 3.62｜ミックスジュース發祥'},
   {lat:34.656,lng:135.4985,name:'無鉄砲 大阪店',note:'Tabelog 3.71｜拉麵百名店｜月定休'},
   {lat:34.6541,lng:135.4986,name:'手作りうどん 天粉盛',note:'Tabelog 3.70｜烏龍麵百名店｜僅午餐'}
-],'#16a085',15);
+],'#16a085',15,[STAY_OSAKA]);
 </script>
 </body>
 </html>
