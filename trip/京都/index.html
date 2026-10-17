@@ -23,7 +23,7 @@ body{font-family:var(--font-sans);color:var(--ink);background:var(--bg);line-hei
 .topbar-inner::-webkit-scrollbar{display:none}
 .topbar-inner a{white-space:nowrap;font-size:.8rem;font-weight:500;color:var(--sub);text-decoration:none;padding:5px 10px;border-radius:6px;transition:background .15s,color .15s;flex-shrink:0}
 .topbar-inner a:hover,.topbar-inner a:focus{background:var(--accent-light);color:var(--accent)}
-.topbar-inner a.brand{font-family:var(--font-serif);font-weight:700;font-size:.95rem;color:var(--ink);padding-left:0}
+.topbar-inner .brand{font-family:var(--font-serif);font-weight:700;font-size:.95rem;color:var(--ink);padding-left:0;white-space:nowrap;flex-shrink:0}
 .hero{max-width:var(--max-w);margin:0 auto;padding:56px 20px 40px;text-align:center}
 .hero h1{font-family:var(--font-serif);font-size:2rem;font-weight:700;letter-spacing:.02em;line-height:1.35;margin-bottom:12px}
 .hero .dates{font-size:1.1rem;color:var(--sub);margin-bottom:20px}
@@ -76,6 +76,9 @@ tbody tr:hover{background:var(--accent-light)}
 .foot{text-align:center;padding:24px 20px;font-size:.75rem;color:var(--mute);border-top:1px solid var(--border);max-width:var(--max-w);margin:0 auto}
 /* MAP */
 .day-map{width:100%;height:280px;border-radius:10px;border:1px solid var(--border);margin:16px 0;z-index:1}
+.info-tip{position:relative;display:inline-block;margin-left:4px;color:var(--accent);cursor:pointer;font-size:.95em}
+.info-tip .tip{display:none;position:fixed;z-index:1000;width:300px;max-width:80vw;padding:12px 14px;background:var(--card);color:var(--sub);border:1px solid var(--border);border-radius:8px;box-shadow:0 4px 16px rgba(0,0,0,.15);font-size:.8rem;line-height:1.6;text-align:left;font-weight:400;white-space:normal}
+.info-tip:hover .tip,.info-tip.open .tip{display:block}
 .stay-marker{background:var(--card);width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:17px;border:2px solid var(--warm);box-shadow:0 2px 6px rgba(0,0,0,.3)}
 .numbered-marker{background:var(--accent);color:#fff;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;border:2px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.3)}
 .leaflet-popup-content{font-family:var(--font-sans);font-size:13px;line-height:1.5}
@@ -203,18 +206,13 @@ tbody tr:hover{background:var(--accent-light)}
   <div class="day-header"><span class="label">Day 5</span><span class="theme">12/28（一）京都→天橋立→伊根【移動日】</span></div>
   <p class="day-meta">住宿：<a href="https://www.google.com/maps/search/?api=1&query=%E3%82%AA%E3%83%BC%E3%83%99%E3%83%AB%E3%82%B8%E3%83%A5%E5%A4%A9%E6%A9%8B%E7%AB%8B+%E5%AE%AE%E6%B4%A5%E5%B8%82%E6%96%87%E7%8F%A0" target="_blank" style="color:var(--accent)">オーベルジュ天橋立</a>（已訂・天橋立站旁）｜必去：伊根舟屋、天橋立</p>
   <div id="map5" class="day-map"></div>
-  <div class="info-block warn"><h4>⚠️ 交通方式待決定</h4><p>12/28 巴士應適用平日時刻表（12/30–1/3 改假日班次），需向丹後海陸交通確認。</p></div>
-  <h4 style="font-family:var(--font-serif);margin:24px 0 12px">交通方案比較</h4>
-  <div class="compare-grid">
-    <div class="compare-card"><h4>方案 A：大眾運輸</h4><div class="row"><span class="lbl">路線</span><span class="val">特急はしだて＋丹海巴士</span></div><div class="row"><span class="lbl">時間</span><span class="val">~2h10m＋55min</span></div><div class="row"><span class="lbl">費用/人</span><span class="val">¥4,790＋¥400</span></div><div class="row"><span class="lbl">彈性</span><span class="val">低（班次稀疏）</span></div><div class="row"><span class="lbl">優點</span><span class="val">無雪地駕駛風險</span></div><div class="row"><span class="lbl">缺點</span><span class="val">行程被綁死</span></div></div>
-    <div class="compare-card"><h4>方案 B：天橋立站租車</h4><div class="row"><span class="lbl">路線</span><span class="val">特急＋租車自駕至伊根</span></div><div class="row"><span class="lbl">時間</span><span class="val">~2h10m＋40min</span></div><div class="row"><span class="lbl">費用/人</span><span class="val">¥4,790＋~¥2,500</span></div><div class="row"><span class="lbl">彈性</span><span class="val">高（自由移動）</span></div><div class="row"><span class="lbl">優點</span><span class="val">5人分攤便宜、時間自由</span></div><div class="row"><span class="lbl">缺點</span><span class="val">冬季雪地駕駛風險</span></div></div>
-  </div>
+  <div class="info-block"><h4>🚗 自駕（12/28 09:00 取車 → 12/29 15:00 前還車）</h4><ul><li>取還車：<a href="https://www.google.com/maps/search/?api=1&query=34.986917%2C135.760472" target="_blank" style="color:var(--accent)">租車接駁點（京都站中央口）</a><span class="info-tip" tabindex="0" aria-label="取車說明">ⓘ<span class="tip"><b>距離京都站 197 m</b><br>請在取車日前儘早聯繫店家，方便安排接駁車與車輛。<br><br><b>店鋪聯絡方式</b><br>網站：<a href="https://cennet.tousenn.co.jp/" target="_blank">cennet.tousenn.co.jp</a><br>WhatsApp：+81-7091757234<br>電話：<a href="tel:+81-080-5707-6497">+81-080-5707-6497</a><br>Kakao：+817028231564（ID：ixrental）<br>LINE：@ixrental<br><br><b>取車指南</b><br>① 從京都站中央出口（京都塔一側）出站<br>② 出站後右轉<br>③ 直行約 120 m，可看到計程車上下客區<br>④ 經過計程車上下客區繼續向前，直到看到廣告看板<br>⑤ 在廣告看板下方拍照告知客服，原地等候有接駁巴士標誌的車輛</span></span>，同店借還</li><li>7–8 人座廂型車；需雪胎、ETC 卡、免責＋NOC 補償</li><li>路線：京都縦貫道 → 與謝天橋立 IC → 國道 178 號往伊根，約 2–2.5 h（高速費未查）</li><li>停車：伊根浦公園（收費）或道の駅 舟屋の里公園（免費）；オーベルジュ天橋立免費停車</li><li>台灣駕照：攜帶正本＋日文譯本</li></ul></div>
   <div class="tbl-wrap"><table><thead><tr><th>時間</th><th>地點／活動</th><th>停留</th><th>交通</th><th>車程</th></tr></thead><tbody>
-    <tr><td>08:38</td><td>❶ <a href="https://www.google.com/maps/search/?api=1&query=%E4%BA%AC%E9%83%BD%E9%A7%85" target="_blank" style="color:var(--accent)">京都站</a>→特急はしだて</td><td>—</td><td>JR 特急</td><td>2h10m</td></tr>
-    <tr><td>10:45</td><td>❷ <a href="https://www.google.com/maps/search/?api=1&query=%E5%A4%A9%E6%A9%8B%E7%AB%8B%E9%A7%85" target="_blank" style="color:var(--accent)">天橋立站</a>（轉巴士或取車）</td><td>—</td><td>—</td><td>—</td></tr>
-    <tr><td>~12:00</td><td>❸ <strong><a href="https://www.google.com/maps/search/?api=1&query=%E4%BC%8A%E6%A0%B9%E3%81%AE%E8%88%9F%E5%B1%8B" target="_blank" style="color:var(--accent)">伊根舟屋</a>散策＋<a href="https://www.google.com/maps/search/?api=1&query=%E4%BC%8A%E6%A0%B9%E6%B9%BE%E3%82%81%E3%81%90%E3%82%8A%E9%81%8A%E8%A6%A7%E8%88%B9" target="_blank" style="color:var(--accent)">遊覽船</a></strong></td><td>2.5 h</td><td>巴士/自駕</td><td>40–55 min</td></tr>
-    <tr><td>15:30</td><td>❹ <strong><a href="https://www.google.com/maps/search/?api=1&query=%E5%82%98%E6%9D%BE%E5%85%AC%E5%9C%92" target="_blank" style="color:var(--accent)">傘松公園</a></strong>（纜車・昇龍觀）</td><td>60 min</td><td>纜車</td><td>—</td></tr>
-    <tr><td>~17:00</td><td>❺ <a href="https://www.google.com/maps/search/?api=1&query=%E3%82%AA%E3%83%BC%E3%83%99%E3%83%AB%E3%82%B8%E3%83%A5%E5%A4%A9%E6%A9%8B%E7%AB%8B+%E5%AE%AE%E6%B4%A5%E5%B8%82%E6%96%87%E7%8F%A0" target="_blank" style="color:var(--accent)">オーベルジュ天橋立</a> Check-in</td><td>—</td><td>觀光船或巴士回天橋立站側</td><td>約 15–25 min</td></tr>
+    <tr><td>09:00</td><td>❶ <a href="https://www.google.com/maps/search/?api=1&query=34.986917%2C135.760472" target="_blank" style="color:var(--accent)">租車接駁點（京都站中央口）</a><span class="info-tip" tabindex="0" aria-label="取車說明">ⓘ<span class="tip"><b>距離京都站 197 m</b><br>請在取車日前儘早聯繫店家，方便安排接駁車與車輛。<br><br><b>店鋪聯絡方式</b><br>網站：<a href="https://cennet.tousenn.co.jp/" target="_blank">cennet.tousenn.co.jp</a><br>WhatsApp：+81-7091757234<br>電話：<a href="tel:+81-080-5707-6497">+81-080-5707-6497</a><br>Kakao：+817028231564（ID：ixrental）<br>LINE：@ixrental<br><br><b>取車指南</b><br>① 從京都站中央出口（京都塔一側）出站<br>② 出站後右轉<br>③ 直行約 120 m，可看到計程車上下客區<br>④ 經過計程車上下客區繼續向前，直到看到廣告看板<br>⑤ 在廣告看板下方拍照告知客服，原地等候有接駁巴士標誌的車輛</span></span> 取車</td><td>30 min</td><td>徒步</td><td>—</td></tr>
+    <tr><td>09:30</td><td>京都縦貫道 → 與謝天橋立 IC → 伊根</td><td>—</td><td>自駕</td><td>約 2–2.5 h</td></tr>
+    <tr><td>~11:45</td><td>❷ <strong><a href="https://www.google.com/maps/search/?api=1&query=%E4%BC%8A%E6%A0%B9%E3%81%AE%E8%88%9F%E5%B1%8B" target="_blank" style="color:var(--accent)">伊根舟屋</a>散策＋<a href="https://www.google.com/maps/search/?api=1&query=%E4%BC%8A%E6%A0%B9%E6%B9%BE%E3%82%81%E3%81%90%E3%82%8A%E9%81%8A%E8%A6%A7%E8%88%B9" target="_blank" style="color:var(--accent)">遊覽船</a></strong>（含午餐）</td><td>2.5 h</td><td>—</td><td>—</td></tr>
+    <tr><td>~14:45</td><td>❸ <strong><a href="https://www.google.com/maps/search/?api=1&query=%E5%82%98%E6%9D%BE%E5%85%AC%E5%9C%92" target="_blank" style="color:var(--accent)">傘松公園</a></strong>（纜車・昇龍觀）</td><td>60 min</td><td>自駕至府中站附近停車＋纜車</td><td>約 30 min</td></tr>
+    <tr><td>~16:15</td><td>❹ <a href="https://www.google.com/maps/search/?api=1&query=%E3%82%AA%E3%83%BC%E3%83%99%E3%83%AB%E3%82%B8%E3%83%A5%E5%A4%A9%E6%A9%8B%E7%AB%8B+%E5%AE%AE%E6%B4%A5%E5%B8%82%E6%96%87%E7%8F%A0" target="_blank" style="color:var(--accent)">オーベルジュ天橋立</a> Check-in（15:00 起）</td><td>—</td><td>自駕</td><td>約 15 min</td></tr>
     <tr><td>18:00</td><td>晚餐（館內餐廳「ピュール」，丹後食材西餐；是否含晚餐依訂房方案）</td><td>—</td><td>—</td><td>—</td></tr>
   </tbody></table></div>
   <div class="info-block"><h4>伊根灣遊覽船</h4><ul><li>9:00–16:00 每 30 分一班，25 分鐘｜¥1,200</li><li>⚠️ 12/28 營運需確認（TEL: 0772-32-0009）</li><li>停駛備案：徒步散策＋海上タクシー（需預約）</li></ul></div>
@@ -226,11 +224,13 @@ tbody tr:hover{background:var(--accent-light)}
   <p class="day-meta">住宿：<a href="https://www.google.com/maps/search/?api=1&query=%E5%85%AB%E4%B8%87%E3%81%AE%E5%AE%BF+%E5%A4%A7%E9%98%AA%E5%B8%82%E8%A5%BF%E6%88%90%E5%8C%BA%E5%8C%97%E9%96%8B2-3-23" target="_blank" style="color:var(--accent)">八万の宿</a>（已訂・西成區今宮站）｜直線移動不折返</p>
   <div id="map6" class="day-map"></div>
   <div class="tbl-wrap"><table><thead><tr><th>時間</th><th>地點／活動</th><th>停留</th><th>交通</th><th>車程</th></tr></thead><tbody>
-    <tr><td>09:30</td><td>❶ <strong><a href="https://www.google.com/maps/search/?api=1&query=%E5%A4%A9%E6%A9%8B%E7%AB%8B" target="_blank" style="color:var(--accent)">天橋立</a></strong>補完散策</td><td>90 min</td><td>徒步</td><td>—</td></tr>
-    <tr><td>12:35</td><td>❷ <a href="https://www.google.com/maps/search/?api=1&query=%E5%A4%A9%E6%A9%8B%E7%AB%8B%E9%A7%85" target="_blank" style="color:var(--accent)">天橋立站</a>→特急はしだて</td><td>—</td><td>JR 特急</td><td>2h10m</td></tr>
-    <tr><td>14:45</td><td>❸ <a href="https://www.google.com/maps/search/?api=1&query=%E4%BA%AC%E9%83%BD%E9%A7%85" target="_blank" style="color:var(--accent)">京都站</a>（轉車＋取行李）</td><td>—</td><td>—</td><td>—</td></tr>
-    <tr><td>15:30</td><td>❹ <a href="https://www.google.com/maps/search/?api=1&query=JR%E5%A4%A7%E9%98%AA%E9%A7%85" target="_blank" style="color:var(--accent)">大阪站</a>（轉 JR 大阪環狀線）</td><td>—</td><td>JR 新快速</td><td>30 min</td></tr>
-    <tr><td>~16:00</td><td>❺ <a href="https://www.google.com/maps/search/?api=1&query=%E5%85%AB%E4%B8%87%E3%81%AE%E5%AE%BF+%E5%A4%A7%E9%98%AA%E5%B8%82%E8%A5%BF%E6%88%90%E5%8C%BA%E5%8C%97%E9%96%8B2-3-23" target="_blank" style="color:var(--accent)">八万の宿</a> Check-in（16:00 起）</td><td>—</td><td>環狀線至今宮站＋徒步 6 min</td><td>約 25 min</td></tr>
+    <tr><td>09:30</td><td>❶ <strong><a href="https://www.google.com/maps/search/?api=1&query=%E5%A4%A9%E6%A9%8B%E7%AB%8B" target="_blank" style="color:var(--accent)">天橋立</a></strong>補完散策（10:00 前退房）</td><td>90 min</td><td>徒步</td><td>—</td></tr>
+    <tr><td>11:00</td><td>天橋立午餐</td><td>60 min</td><td>—</td><td>—</td></tr>
+    <tr><td>~12:00</td><td>出發回京都</td><td>—</td><td>自駕（京都縦貫道）</td><td>約 2–2.5 h</td></tr>
+    <tr><td>~14:30</td><td>❷ <a href="https://www.google.com/maps/search/?api=1&query=34.986917%2C135.760472" target="_blank" style="color:var(--accent)">租車接駁點（京都站中央口）</a><span class="info-tip" tabindex="0" aria-label="取車說明">ⓘ<span class="tip"><b>距離京都站 197 m</b><br>請在取車日前儘早聯繫店家，方便安排接駁車與車輛。<br><br><b>店鋪聯絡方式</b><br>網站：<a href="https://cennet.tousenn.co.jp/" target="_blank">cennet.tousenn.co.jp</a><br>WhatsApp：+81-7091757234<br>電話：<a href="tel:+81-080-5707-6497">+81-080-5707-6497</a><br>Kakao：+817028231564（ID：ixrental）<br>LINE：@ixrental<br><br><b>取車指南</b><br>① 從京都站中央出口（京都塔一側）出站<br>② 出站後右轉<br>③ 直行約 120 m，可看到計程車上下客區<br>④ 經過計程車上下客區繼續向前，直到看到廣告看板<br>⑤ 在廣告看板下方拍照告知客服，原地等候有接駁巴士標誌的車輛</span></span> 還車（15:00 前）</td><td>—</td><td>—</td><td>—</td></tr>
+    <tr><td>~14:50</td><td>❸ <a href="https://www.google.com/maps/search/?api=1&query=%E4%BA%AC%E9%83%BD%E9%A7%85" target="_blank" style="color:var(--accent)">京都站</a>（取行李）→ JR 新快速</td><td>—</td><td>徒步</td><td>約 5 min</td></tr>
+    <tr><td>~15:20</td><td>❹ <a href="https://www.google.com/maps/search/?api=1&query=JR%E5%A4%A7%E9%98%AA%E9%A7%85" target="_blank" style="color:var(--accent)">大阪站</a>（轉 JR 大阪環狀線）</td><td>—</td><td>JR 新快速</td><td>30 min</td></tr>
+    <tr><td>~15:50</td><td>❺ <a href="https://www.google.com/maps/search/?api=1&query=%E5%85%AB%E4%B8%87%E3%81%AE%E5%AE%BF+%E5%A4%A7%E9%98%AA%E5%B8%82%E8%A5%BF%E6%88%90%E5%8C%BA%E5%8C%97%E9%96%8B2-3-23" target="_blank" style="color:var(--accent)">八万の宿</a> Check-in（16:00 起）</td><td>—</td><td>環狀線至今宮站＋徒步 6 min</td><td>約 25 min</td></tr>
   </tbody></table></div>
 </section>
 
@@ -278,9 +278,10 @@ tbody tr:hover{background:var(--accent-light)}
   <h2>附錄｜票券與交通成本比較</h2>
   <div class="compare-grid">
     <div class="compare-card"><h4>JR 關西廣域周遊券</h4><div class="row"><span class="lbl">價格</span><span class="val">¥12,000／人（5日）</span></div><div class="row"><span class="lbl">含指定席</span><span class="val">HARUKA・はしだて 等</span></div><div class="row"><span class="lbl">建議啟用</span><span class="val">12/24 或 12/25</span></div><div class="row"><span class="lbl">不含</span><span class="val">叡電・京阪・市巴士</span></div></div>
-    <div class="compare-card"><h4>逐段購票估算</h4><div class="row"><span class="lbl">HARUKA 去</span><span class="val">¥3,590</span></div><div class="row"><span class="lbl">はしだて 去</span><span class="val">¥4,790</span></div><div class="row"><span class="lbl">はしだて 回</span><span class="val">¥4,790</span></div><div class="row"><span class="lbl">京都→大阪</span><span class="val">¥580</span></div><div class="row"><span class="lbl">HARUKA 回</span><span class="val">~¥1,930</span></div><div class="row" style="font-weight:600"><span class="lbl">小計</span><span class="val">~¥15,680</span></div></div>
+    <div class="compare-card"><h4>逐段購票估算</h4><div class="row"><span class="lbl">HARUKA 去</span><span class="val">¥3,590</span></div><div class="row"><span class="lbl">京都→大阪</span><span class="val">¥580</span></div><div class="row"><span class="lbl">HARUKA 回</span><span class="val">~¥1,930</span></div><div class="row" style="font-weight:600"><span class="lbl">小計</span><span class="val">~¥6,100</span></div></div>
+    <div class="compare-card"><h4>租車（12/28 09:00–12/29 15:00，5 人分攤）</h4><div class="row"><span class="lbl">車資＋免責＋NOC</span><span class="val">~¥21,520 起（Jalan 參考最低價）</span></div><div class="row"><span class="lbl">ETC 卡</span><span class="val">¥440（日產）</span></div><div class="row"><span class="lbl">雪胎</span><span class="val">另計，需向店家確認</span></div><div class="row"><span class="lbl">油錢・高速費</span><span class="val">未查</span></div><div class="row" style="font-weight:600"><span class="lbl">每人</span><span class="val">~¥4,400 起＋油錢・高速費</span></div></div>
   </div>
-  <div class="info-block"><h4>結論</h4><p>周遊券省約 ¥4,000–5,000／人，幾乎必定回本。最佳啟用日 12/24（涵蓋 HARUKA 去程＋はしだて 去程），12/29 回程＋12/31 回程需另購。或改 12/25 啟用涵蓋はしだて來回。</p></div>
+  <div class="info-block"><h4>結論</h4><p>丹後改自駕後不搭特急はしだて，JR 逐段購票約 ¥6,100／人，周遊券 ¥12,000 不划算，改逐段購票即可。</p></div>
 </section>
 
 <section class="appendix-section" id="risks">
@@ -288,7 +289,7 @@ tbody tr:hover{background:var(--accent-light)}
   <div class="tbl-wrap"><table><thead><tr><th>風險</th><th>機率</th><th>應對</th></tr></thead><tbody>
     <tr><td>伊根遊覽船因海況停駛</td><td>中</td><td>改徒步散策＋海上タクシー＋展望台</td></tr>
     <tr><td>叡山電鐵因積雪停駛</td><td>中低</td><td>改排下鴨神社等京都市區</td></tr>
-    <tr><td>特急はしだて年末滿席</td><td>中高</td><td>提前 1 個月購買指定席</td></tr>
+    <tr><td>冬季雪道駕駛（京都縦貫道・丹後）</td><td>中</td><td>一定要雪胎；出發前查道路與氣象；大雪時改搭特急はしだて</td></tr>
     <tr><td>大阪城天守閣 12/30 休館</td><td>高</td><td>改城公園散步＋豐國神社</td></tr>
     <tr><td>黑門市場 12/30 極度擁擠</td><td>高</td><td>10:00 前抵達或改吃他處</td></tr>
     <tr><td>丹後地區大雪封路</td><td>低中</td><td>提前查氣象；備案改排城崎溫泉</td></tr>
@@ -301,8 +302,7 @@ tbody tr:hover{background:var(--accent-light)}
   <h2>附錄｜預約清單</h2>
   <div class="tbl-wrap"><table><thead><tr><th>項目</th><th>何時預約</th><th>備註</th></tr></thead><tbody>
     <tr><td>12/28 丹後住宿</td><td>✅ 已訂</td><td>オーベルジュ天橋立；確認是否含晚餐</td></tr>
-    <tr><td>天橋立租車（方案 B）</td><td><strong>立即</strong></td><td>雪胎車輛有限</td></tr>
-    <tr><td>特急はしだて指定席</td><td>11/24 起</td><td>JR 提前 1 個月</td></tr>
+    <tr><td>京都租車（12/28 09:00–12/29 15:00，7–8 人座）</td><td><strong>立即</strong></td><td>雪胎車輛有限；ETC 卡、免責＋NOC 補償</td></tr>
     <tr><td>高單價晚餐</td><td>出發前 2–4 週</td><td>年末預約難度高</td></tr>
     <tr><td>貴船午餐</td><td>出發前 2 週</td><td>需確認 12/25 營業</td></tr>
     <tr><td>海上タクシー</td><td>出發前 1–2 週</td><td>遊覽船停駛 Plan B</td></tr>
@@ -315,14 +315,11 @@ tbody tr:hover{background:var(--accent-light)}
   <ol class="checklist">
     <li>一保堂茶舗 京都本店 12/27 營業（年末年始休業日期）</li>
     <li>伊根灣遊覽船 12/28 營運狀況（TEL: 0772-32-0009）</li>
-    <li>丹海巴士伊根線 12/28 適用平日或假日時刻表</li>
-    <li>特急はしだて 12/28、12/29 班次時刻</li>
     <li>天橋立傘松公園纜車、ビューランド年末營業時間</li>
     <li>貴船神社 12/25 特別開門時間</li>
     <li>貴船地區餐廳 12/25 營業狀況</li>
     <li>大阪城天守閣 2026 年末休館日程</li>
-    <li>JR 關西廣域周遊券最新價格</li>
-    <li>天橋立站租車雪胎車輛預約</li>
+    <li>租車：確認雪胎、ETC 卡；台灣駕照正本＋日文譯本</li>
     <li>HARUKA 12/24 繁忙期票價</li>
     <li>京都巴士 33 號冬季運行狀況</li>
   </ol>
@@ -440,6 +437,29 @@ function makeMap(id,spots,color,zoom,stays){
   if(bounds.length>1) m.fitBounds(bounds,{padding:[32,32]});
 }
 
+// Info tips: fixed-position so table overflow doesn't clip them
+document.querySelectorAll('.info-tip').forEach(function(t){
+  function place(){
+    const r=t.getBoundingClientRect(),tp=t.querySelector('.tip'),w=Math.min(300,innerWidth*.8);
+    tp.style.left=Math.max(8,Math.min(r.left,innerWidth-w-8))+'px';
+    tp.style.top=(r.bottom+6)+'px';
+  }
+  t.addEventListener('mouseenter',place);
+  t.addEventListener('click',function(e){
+    if(e.target.closest('.tip a')) return;
+    e.stopPropagation();
+    const open=!t.classList.contains('open');
+    document.querySelectorAll('.info-tip.open').forEach(function(x){x.classList.remove('open')});
+    if(open){t.classList.add('open');place();}
+  });
+});
+document.addEventListener('click',function(){
+  document.querySelectorAll('.info-tip.open').forEach(function(x){x.classList.remove('open')});
+});
+window.addEventListener('scroll',function(){
+  document.querySelectorAll('.info-tip.open').forEach(function(x){x.classList.remove('open')});
+},{passive:true});
+
 // Colors
 const CK='#5b7e5f',CT='#2d5a7b',CO='#9b5c2e',CM='#8888a0';
 
@@ -472,18 +492,18 @@ makeMap('map4',[
 ],CK,13,[STAY_KYOTO]);
 
 makeMap('map5',[
-  {lat:34.9859,lng:135.7588,name:'京都車站',note:'08:38 特急はしだて出發'},
-  {lat:35.5574,lng:135.1826,name:'天橋立站',note:'10:45 抵達・轉巴士或取車'},
-  {lat:35.6757,lng:135.2875,name:'伊根舟屋',note:'12:00–14:30 散策＋遊覽船'},
-  {lat:35.5867,lng:135.195,name:'傘松公園',note:'15:30 纜車・昇龍觀'},
-  {lat:35.5589,lng:135.1812,name:'オーベルジュ天橋立',note:'~17:00 Check-in・晚餐',stay:true}
+  {lat:34.986917,lng:135.760472,name:'租車接駁點（京都站中央口）',note:'09:00 取車'},
+  {lat:35.6757,lng:135.2875,name:'伊根舟屋',note:'~11:45–14:15 散策＋遊覽船＋午餐'},
+  {lat:35.5867,lng:135.195,name:'傘松公園',note:'~14:45 纜車・昇龍觀'},
+  {lat:35.5589,lng:135.1812,name:'オーベルジュ天橋立',note:'~16:15 Check-in・晚餐',stay:true}
 ],CT,9);
 
 makeMap('map6',[
-  {lat:35.5574,lng:135.1826,name:'天橋立站',note:'09:30 補完散策'},
-  {lat:34.9859,lng:135.7588,name:'京都站',note:'14:45 轉車＋取行李'},
-  {lat:34.7025,lng:135.496,name:'大阪站（梅田）',note:'15:30 轉環狀線'},
-  {lat:34.6538,lng:135.4889,name:'八万の宿',note:'~16:00 Check-in',stay:true}
+  {lat:35.5698,lng:135.1918,name:'天橋立',note:'09:30 補完散策'},
+  {lat:34.986917,lng:135.760472,name:'租車接駁點（京都站中央口）',note:'~14:30 還車（15:00 前）'},
+  {lat:34.9859,lng:135.7588,name:'京都站',note:'~14:50 取行李・JR 新快速'},
+  {lat:34.7025,lng:135.496,name:'大阪站（梅田）',note:'~15:20 轉環狀線'},
+  {lat:34.6538,lng:135.4889,name:'八万の宿',note:'~15:50 抵達・16:00 Check-in',stay:true}
 ],CM,8);
 
 makeMap('map7',[
