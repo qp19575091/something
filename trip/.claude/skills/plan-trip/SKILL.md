@@ -35,6 +35,7 @@ description: 規劃新旅程並產生 trip/<地點>/index.html 行程頁，或�
 ## 4. 收尾
 
 - 在 `trip/.claude/CLAUDE.md` 的「行程索引」加一列
+- 在 `trip/index.html` 目錄頁加一張行程卡片
 - 告訴使用者哪些資訊尚未查證、哪些需要提前預約
 
 ## 修改既有行程
@@ -49,5 +50,5 @@ description: 規劃新旅程並產生 trip/<地點>/index.html 行程頁，或�
    - 地圖標記（Leaflet）
    - 附錄：預約清單、成本比較、風險清單、出發前確認清單
 4. **收尾**：
-   - 日期或行程名稱有變的話，更新 `trip/.claude/CLAUDE.md` 的「行程索引」
+   - 日期或行程名稱有變的話，更新 `trip/.claude/CLAUDE.md` 的「行程索引」和 `trip/index.html` 的行程卡片
    - 跟使用者說改了哪些地方、哪些資訊還沒查證、哪些要新增預約

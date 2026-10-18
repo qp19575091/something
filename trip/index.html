@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>旅遊行程目錄</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#1a1a2e;--sub:#4a4a6a;--mute:#8888a0;--border:#d4d4e0;
+  --bg:#f7f6f3;--card:#fff;--accent:#2d5a7b;--accent-light:#e8f0f6;
+  --warm:#c45d3e;--warm-light:#fdf0ec;--tag-kyoto:#5b7e5f;--tag-tango:#2d5a7b;--tag-osaka:#9b5c2e;
+  --font-serif:'Noto Serif TC',serif;--font-sans:'Noto Sans TC',sans-serif;
+  --max-w:780px;
+}
+html{font-size:15px}
+body{font-family:var(--font-sans);color:var(--ink);background:var(--bg);line-height:1.75;-webkit-font-smoothing:antialiased}
+.wrap{max-width:var(--max-w);margin:0 auto;padding:48px 16px 64px}
+h1{font-family:var(--font-serif);font-size:1.8rem;font-weight:700;margin-bottom:4px}
+.lead{color:var(--sub);font-size:.9rem;margin-bottom:28px}
+.trip-list{display:grid;gap:14px}
+.trip-card{display:block;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px 20px;color:inherit;text-decoration:none;transition:box-shadow .2s,border-color .2s}
+.trip-card:hover,.trip-card:focus{box-shadow:0 4px 16px rgba(0,0,0,.06);border-color:var(--accent)}
+.trip-card .dates{font-size:.8rem;color:var(--mute)}
+.trip-card h2{font-family:var(--font-serif);font-size:1.2rem;font-weight:700;color:var(--accent);margin:2px 0 6px}
+.trip-card .desc{font-size:.85rem;color:var(--sub)}
+.tags{margin-top:10px;display:flex;flex-wrap:wrap;gap:6px}
+.tag{font-size:.65rem;font-weight:600;padding:2px 8px;border-radius:4px;color:#fff}
+.tag-kyoto{background:var(--tag-kyoto)}.tag-tango{background:var(--tag-tango)}.tag-osaka{background:var(--tag-osaka)}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <h1>旅遊行程目錄</h1>
+  <p class="lead">點選行程即可開啟。</p>
+
+  <div class="trip-list">
+    <a class="trip-card" href="京都/">
+      <div class="dates">2026/12/24（四）– 12/31（四）・5 位成人</div>
+      <h2>關西 8 天 7 夜</h2>
+      <div class="desc">京都・丹後（伊根、天橋立）・大阪｜KIX 進出</div>
+      <div class="tags"><span class="tag tag-kyoto">京都</span><span class="tag tag-tango">丹後</span><span class="tag tag-osaka">大阪</span></div>
+    </a>
+  </div>
+</main>
+</body>
+</html>
