@@ -3,46 +3,107 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>旅遊行程目錄</title>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500;600&display=swap" rel="stylesheet">
+<title>旅遊抽屜｜雜物收納櫃</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700;900&family=Noto+Sans+TC:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
   --ink:#1a1a2e;--sub:#4a4a6a;--mute:#8888a0;--border:#d4d4e0;
-  --bg:#f7f6f3;--card:#fff;--accent:#2d5a7b;--accent-light:#e8f0f6;
+  --bg:#f7f6f3;--bg-dot:#e6e3dc;--card:#fff;--accent:#2d5a7b;--accent-light:#e8f0f6;--accent-deep:#1d3f58;
   --warm:#c45d3e;--warm-light:#fdf0ec;--tag-kyoto:#5b7e5f;--tag-tango:#2d5a7b;--tag-osaka:#9b5c2e;
+  --on-dark:#fff;--on-dark-sub:rgba(255,255,255,.78);
+  --shadow:0 1px 2px rgba(26,26,46,.04),0 8px 24px rgba(26,26,46,.06);
+  --shadow-hover:0 2px 4px rgba(26,26,46,.06),0 16px 40px rgba(26,26,46,.10);
   --font-serif:'Noto Serif TC',serif;--font-sans:'Noto Sans TC',sans-serif;
-  --max-w:780px;
+  --max-w:860px;
 }
 html{font-size:15px}
-body{font-family:var(--font-sans);color:var(--ink);background:var(--bg);line-height:1.75;-webkit-font-smoothing:antialiased}
-.wrap{max-width:var(--max-w);margin:0 auto;padding:48px 16px 64px}
-h1{font-family:var(--font-serif);font-size:1.8rem;font-weight:700;margin-bottom:4px}
-.lead{color:var(--sub);font-size:.9rem;margin-bottom:28px}
-.trip-list{display:grid;gap:14px}
-.trip-card{display:block;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px 20px;color:inherit;text-decoration:none;transition:box-shadow .2s,border-color .2s}
-.trip-card:hover,.trip-card:focus{box-shadow:0 4px 16px rgba(0,0,0,.06);border-color:var(--accent)}
-.trip-card .dates{font-size:.8rem;color:var(--mute)}
-.trip-card h2{font-family:var(--font-serif);font-size:1.2rem;font-weight:700;color:var(--accent);margin:2px 0 6px}
-.trip-card .desc{font-size:.85rem;color:var(--sub)}
-.tags{margin-top:10px;display:flex;flex-wrap:wrap;gap:6px}
-.tag{font-size:.65rem;font-weight:600;padding:2px 8px;border-radius:4px;color:#fff}
+body{font-family:var(--font-sans);color:var(--ink);background:var(--bg);background-image:radial-gradient(var(--bg-dot) 1px,transparent 1px);background-size:22px 22px;line-height:1.75;-webkit-font-smoothing:antialiased;min-height:100vh}
+.wrap{max-width:var(--max-w);margin:0 auto;padding:28px 16px 64px}
+
+.back{display:inline-flex;align-items:center;gap:6px;font-size:.82rem;color:var(--sub);text-decoration:none;padding:6px 12px;border-radius:999px;background:var(--card);border:1px solid var(--border);transition:border-color .2s,color .2s}
+.back:hover,.back:focus-visible{color:var(--accent);border-color:var(--accent)}
+
+.hero{text-align:center;margin:40px 0 44px}
+.hero .icon{font-size:2.4rem;line-height:1}
+.hero h1{font-family:var(--font-serif);font-weight:900;font-size:clamp(2rem,7vw,2.8rem);letter-spacing:.12em;margin-top:10px}
+.hero .sub{color:var(--sub);margin-top:6px;font-size:.92rem}
+.hero .rule{width:48px;height:3px;border-radius:2px;background:var(--warm);margin:20px auto 0}
+
+.section-title{display:flex;align-items:center;gap:10px;font-family:var(--font-serif);font-size:1rem;font-weight:700;color:var(--sub);margin-bottom:16px}
+.section-title::after{content:'';flex:1;height:1px;background:var(--border)}
+
+.trips{display:grid;gap:18px}
+.trip{display:grid;grid-template-columns:220px 1fr;background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;color:inherit;text-decoration:none;box-shadow:var(--shadow);transition:transform .2s,box-shadow .2s,border-color .2s}
+.trip:hover,.trip:focus-visible{transform:translateY(-3px);box-shadow:var(--shadow-hover);border-color:var(--accent)}
+.trip .cover{position:relative;padding:22px 20px;color:var(--on-dark);background:linear-gradient(140deg,var(--accent) 0%,var(--accent-deep) 100%);display:flex;flex-direction:column;justify-content:space-between;min-height:170px}
+.trip .cover .place{font-family:var(--font-serif);font-weight:900;font-size:2.1rem;letter-spacing:.15em;line-height:1.2}
+.trip .cover .when{font-size:.8rem;color:var(--on-dark-sub)}
+.trip .cover .status{align-self:flex-start;font-size:.72rem;font-weight:600;padding:3px 10px;border-radius:999px;background:var(--warm);color:var(--on-dark)}
+.trip .cover .status.past{background:var(--mute)}
+.trip .body{padding:20px 22px;display:flex;flex-direction:column}
+.trip h2{font-family:var(--font-serif);font-size:1.3rem;font-weight:700;color:var(--accent)}
+.trip .desc{font-size:.86rem;color:var(--sub);margin-top:4px}
+.trip .facts{display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:12px;font-size:.8rem;color:var(--sub)}
+.trip .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto;padding-top:14px}
+.tag{font-size:.68rem;font-weight:600;padding:2px 9px;border-radius:4px;color:var(--on-dark)}
 .tag-kyoto{background:var(--tag-kyoto)}.tag-tango{background:var(--tag-tango)}.tag-osaka{background:var(--tag-osaka)}
+.trip .go{font-size:.8rem;font-weight:600;color:var(--accent);margin-top:12px}
+.trip:hover .go{text-decoration:underline}
+
+@media(max-width:600px){
+  .trip{grid-template-columns:1fr}
+  .trip .cover{min-height:auto;gap:14px}
+}
+
+.foot{text-align:center;color:var(--mute);font-size:.75rem;margin-top:56px}
 </style>
 </head>
 <body>
 <main class="wrap">
-  <h1>旅遊行程目錄</h1>
-  <p class="lead">點選行程即可開啟。</p>
+  <a class="back" href="../">← 雜物收納櫃</a>
 
-  <div class="trip-list">
-    <a class="trip-card" href="京都/">
-      <div class="dates">2026/12/24（四）– 12/31（四）・5 位成人</div>
-      <h2>關西 8 天 7 夜</h2>
-      <div class="desc">京都・丹後（伊根、天橋立）・大阪｜KIX 進出</div>
-      <div class="tags"><span class="tag tag-kyoto">京都</span><span class="tag tag-tango">丹後</span><span class="tag tag-osaka">大阪</span></div>
+  <header class="hero">
+    <div class="icon">✈️</div>
+    <h1>旅遊抽屜</h1>
+    <p class="sub">每一趟旅程的行程、住宿、交通與美食地圖</p>
+    <div class="rule"></div>
+  </header>
+
+  <h2 class="section-title">行程</h2>
+  <div class="trips">
+    <a class="trip" href="京都/" data-start="2026-12-24" data-end="2026-12-31">
+      <div class="cover">
+        <span class="status"></span>
+        <div>
+          <div class="place">關西</div>
+          <div class="when">2026 · 冬</div>
+        </div>
+      </div>
+      <div class="body">
+        <h2>關西 8 天 7 夜</h2>
+        <div class="desc">京都・丹後（伊根、天橋立）・大阪</div>
+        <div class="facts"><span>📅 12/24（四）– 12/31（四）</span><span>👥 5 位成人</span><span>🛫 KIX 進出</span></div>
+        <div class="tags"><span class="tag tag-kyoto">京都</span><span class="tag tag-tango">丹後</span><span class="tag tag-osaka">大阪</span></div>
+        <div class="go">查看行程 →</div>
+      </div>
     </a>
   </div>
+
+  <p class="foot">雜物收納櫃 · 旅遊抽屜</p>
 </main>
+<script>
+// Trip status: countdown / ongoing / past, from data-start and data-end
+(function(){
+  var today=new Date();today.setHours(0,0,0,0);
+  document.querySelectorAll('.trip[data-start]').forEach(function(t){
+    var s=new Date(t.dataset.start+'T00:00:00'),e=new Date(t.dataset.end+'T00:00:00');
+    var el=t.querySelector('.status'),days=Math.round((s-today)/864e5);
+    if(today>e){el.textContent='已結束';el.classList.add('past');}
+    else if(today>=s){el.textContent='旅行中';}
+    else{el.textContent='倒數 '+days+' 天';}
+  });
+})();
+</script>
 </body>
 </html>

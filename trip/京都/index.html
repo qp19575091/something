@@ -74,6 +74,35 @@ tbody tr:hover{background:var(--accent-light)}
 .checklist li{counter-increment:ck;position:relative;padding:10px 12px 10px 40px;font-size:.85rem;color:var(--sub);border-bottom:1px solid var(--border)}
 .checklist li::before{content:counter(ck);position:absolute;left:10px;top:10px;width:22px;height:22px;border-radius:50%;background:var(--accent);color:#fff;font-size:.7rem;font-weight:600;display:flex;align-items:center;justify-content:center}
 .foot{text-align:center;padding:24px 20px;font-size:.75rem;color:var(--mute);border-top:1px solid var(--border);max-width:var(--max-w);margin:0 auto}
+.exp-form{display:grid;grid-template-columns:repeat(2,1fr);gap:10px 14px}
+.exp-form label{display:flex;flex-direction:column;gap:4px;font-size:.78rem;color:var(--mute)}
+.exp-form .full{grid-column:1/-1}
+.exp-form input,.exp-form select{font:inherit;font-size:.9rem;color:var(--ink);background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:8px 10px;width:100%}
+.exp-form input:focus,.exp-form select:focus{outline:2px solid var(--accent-light);border-color:var(--accent)}
+.exp-split{display:flex;flex-wrap:wrap;gap:6px}
+.exp-split input{width:auto;padding:0;margin:0}
+.exp-split label{flex-direction:row;align-items:center;gap:4px;font-size:.82rem;color:var(--sub);background:var(--bg);border:1px solid var(--border);border-radius:999px;padding:4px 10px;cursor:pointer}
+.exp-btns{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.btn{font:inherit;font-size:.82rem;font-weight:600;border-radius:8px;padding:8px 14px;cursor:pointer;border:1px solid var(--accent);background:var(--accent);color:#fff}
+.btn.ghost{background:var(--card);color:var(--accent)}
+.btn.danger{border-color:var(--warm);background:var(--card);color:var(--warm)}
+.btn.sm{font-size:.72rem;padding:3px 8px}
+.exp-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:14px 0}
+.exp-stat{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px 14px}
+.exp-stat .k{font-size:.72rem;color:var(--mute)}
+.exp-stat .v small,.bar-row .amt small,.exp-tbl small,.exp-amt small{display:block;font-family:var(--font-sans);font-size:.72rem;font-weight:400;color:var(--mute)}
+.exp-fx{font-size:.8rem;color:var(--accent);min-height:1.2em;margin-top:-4px}
+.exp-stat .v{font-family:var(--font-serif);font-size:1.25rem;font-weight:700;color:var(--accent)}
+.bar-row{display:grid;grid-template-columns:72px 1fr 110px;align-items:center;gap:8px;font-size:.8rem;padding:4px 0}
+.bar-row .bar{height:10px;border-radius:5px;background:var(--accent-light);overflow:hidden}
+.bar-row .bar span{display:block;height:100%;background:var(--accent);border-radius:5px}
+.bar-row .amt{text-align:right;color:var(--sub)}
+.exp-sub{font-family:var(--font-serif);font-size:1rem;font-weight:600;margin:24px 0 8px}
+.pos{color:var(--tag-kyoto);font-weight:600}.neg{color:var(--warm);font-weight:600}
+.badge-local{font-size:.68rem;font-weight:600;color:var(--warm);background:var(--warm-light);border-radius:4px;padding:1px 6px;white-space:nowrap}
+.exp-empty{font-size:.85rem;color:var(--mute);padding:12px 0}
+@media(max-width:600px){.exp-stat .v{font-size:1.05rem}.exp-form{grid-template-columns:1fr}}
+.exp-tbl{min-width:0}
 /* MAP */
 .day-map{width:100%;height:280px;border-radius:10px;border:1px solid var(--border);margin:16px 0;z-index:1}
 .info-tip{position:relative;display:inline-block;margin-left:4px;color:var(--accent);cursor:pointer;font-size:.95em}
@@ -108,6 +137,7 @@ tbody tr:hover{background:var(--accent-light)}
   <a onclick="document.getElementById('tickets').scrollIntoView({behavior:'smooth'});return false" href="javascript:void(0)">票券</a>
   <a onclick="document.getElementById('risks').scrollIntoView({behavior:'smooth'});return false" href="javascript:void(0)">風險</a>
   <a onclick="document.getElementById('todo').scrollIntoView({behavior:'smooth'});return false" href="javascript:void(0)">確認清單</a>
+  <a onclick="document.getElementById('expenses').scrollIntoView({behavior:'smooth'});return false" href="javascript:void(0)">花費</a>
   <a onclick="document.getElementById('food').scrollIntoView({behavior:'smooth'});return false" href="javascript:void(0)">美食</a>
 </div></nav>
 
@@ -323,6 +353,67 @@ tbody tr:hover{background:var(--accent-light)}
     <li>HARUKA 12/24 繁忙期票價</li>
     <li>京都巴士 33 號冬季運行狀況</li>
   </ol>
+</section>
+</div>
+
+<div class="appendix">
+<section class="appendix-section" id="expenses">
+  <h2>附錄｜花費記帳</h2>
+  <p style="font-size:.82rem;color:var(--sub)">在這裡記帳會先存在這台裝置的瀏覽器（標「未同步」）。按「匯出」下載 JSON 後跟 Claude 說「整理花費」，就會合併進專案的 <code>expenses.json</code> 並推上 GitHub，大家都看得到。可選幣別，自動換算成日圓與台幣；每筆會存下記帳當下的匯率。<br>匯率：<span id="exp-rate-src">載入中…</span></p>
+
+  <h3 class="exp-sub">✏️ 記一筆</h3>
+  <div class="info-block">
+    <form class="exp-form" id="exp-form">
+      <label>日期<select id="exp-date"></select></label>
+      <label>分類<select id="exp-cat"></select></label>
+      <label class="full">項目<input id="exp-item" required placeholder="例：伊根遊覽船"></label>
+      <label>幣別<select id="exp-cur"></select></label>
+      <label><span id="exp-amount-lbl">金額</span><input id="exp-amount" type="number" inputmode="decimal" min="0" step="any" required placeholder="1200"></label>
+      <div class="full exp-fx" id="exp-fx"></div>
+      <label>付款人<select id="exp-payer"></select></label>
+      <div class="full"><div style="font-size:.78rem;color:var(--mute);margin-bottom:4px">分攤成員</div><div class="exp-split" id="exp-split"></div></div>
+      <label class="full">備註<input id="exp-note" placeholder="選填"></label>
+      <div class="full exp-btns"><button class="btn" type="submit">新增</button></div>
+    </form>
+    <div class="exp-btns">
+      <button class="btn ghost" type="button" id="exp-export">匯出未同步（JSON）</button>
+      <button class="btn ghost" type="button" id="exp-members">編輯成員</button>
+      <button class="btn danger" type="button" id="exp-clear">清除已同步的本機紀錄</button>
+    </div>
+  </div>
+
+  <h3 class="exp-sub">📊 總覽</h3>
+  <div class="exp-stats">
+    <div class="exp-stat"><div class="k">總花費</div><div class="v" id="exp-total">¥0</div></div>
+    <div class="exp-stat"><div class="k">每人平均</div><div class="v" id="exp-avg">¥0</div></div>
+    <div class="exp-stat"><div class="k">筆數</div><div class="v" id="exp-count">0</div></div>
+  </div>
+  <div class="compare-grid">
+    <div class="compare-card"><h4>依分類</h4><div id="exp-by-cat"></div></div>
+    <div class="compare-card"><h4>依日期</h4><div id="exp-by-day"></div></div>
+  </div>
+
+  <h3 class="exp-sub">🤝 分帳</h3>
+  <div class="tbl-wrap"><table class="exp-tbl"><thead><tr><th>成員</th><th>已付</th><th>應付</th><th>差額</th></tr></thead><tbody id="exp-balance"></tbody></table></div>
+  <div class="info-block"><h4>結算建議</h4><ul id="exp-settle"></ul></div>
+
+  <h3 class="exp-sub">👤 個人花費</h3>
+  <div class="info-block">
+    <label style="display:flex;align-items:center;gap:8px;font-size:.85rem;color:var(--sub)">我是
+      <select id="exp-me" style="font:inherit;font-size:.9rem;color:var(--ink);background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:6px 10px"></select>
+    </label>
+    <div class="exp-stats">
+      <div class="exp-stat"><div class="k">我的總花費</div><div class="v" id="me-total">¥0</div></div>
+      <div class="exp-stat"><div class="k">共同分攤</div><div class="v" id="me-shared">¥0</div></div>
+      <div class="exp-stat"><div class="k">自己的</div><div class="v" id="me-own">¥0</div></div>
+    </div>
+    <p style="font-size:.78rem;color:var(--mute)">我的總花費＝分攤到我身上的金額（不管當下是誰付的）。「自己的」是分攤成員只有我一人的花費。實際掏出的錢與要轉帳的金額看上面「分帳」。</p>
+    <div id="me-by-cat" style="margin-top:10px"></div>
+  </div>
+  <div class="tbl-wrap"><table class="exp-tbl"><thead><tr><th>日期</th><th>項目</th><th>付款人</th><th style="text-align:right">我分到</th></tr></thead><tbody id="me-list"></tbody></table></div>
+
+  <h3 class="exp-sub">🧾 明細</h3>
+  <div class="tbl-wrap"><table><thead><tr><th>日期</th><th>項目</th><th>分類</th><th>付款人</th><th>分攤</th><th style="text-align:right">金額</th><th></th></tr></thead><tbody id="exp-list"></tbody></table></div>
 </section>
 </div>
 
@@ -571,6 +662,199 @@ makeMap('map-osaka-stay',[
   {lat:34.656,lng:135.4985,name:'無鉄砲 大阪店',note:'Tabelog 3.71｜拉麵百名店｜月定休'},
   {lat:34.6541,lng:135.4986,name:'手作りうどん 天粉盛',note:'Tabelog 3.70｜烏龍麵百名店｜僅午餐'}
 ],'#16a085',15,[STAY_OSAKA]);
+
+// EXPENSES: repo data (expenses.json) + unsynced entries in this browser's localStorage
+(function(){
+  const KEY='trip-expenses:京都';
+  const DAYS=[['2026-12-24','D1 12/24'],['2026-12-25','D2 12/25'],['2026-12-26','D3 12/26'],['2026-12-27','D4 12/27'],['2026-12-28','D5 12/28'],['2026-12-29','D6 12/29'],['2026-12-30','D7 12/30'],['2026-12-31','D8 12/31'],['pre','出發前']];
+  const CATS=['交通','住宿','餐飲','門票','購物','其他'];
+  // [code, name, symbol, decimals]
+  const CURS=[['JPY','日圓','¥',0],['TWD','台幣','NT$',0],['USD','美元','US$',2],['EUR','歐元','€',2],['KRW','韓圓','₩',0],['HKD','港幣','HK$',2],['CNY','人民幣','CN¥',2]];
+  const $=id=>document.getElementById(id);
+  const esc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  let repo={members:[],expenses:[],me:null,currency:'JPY'};
+  let rates={TWD:1},rateNote='';   // TWD per 1 unit
+  const BASE=()=>repo.currency||'JPY';
+  function money(n,cur){
+    const c=CURS.find(x=>x[0]===cur)||[cur,cur,cur+' ',2];
+    const v=Math.abs(n).toLocaleString('en-US',{minimumFractionDigits:c[3],maximumFractionDigits:c[3]});
+    return (n<0&&Math.abs(n)>=0.5?'−':'')+c[2]+v;
+  }
+  // value of an entry in TWD (rate fixed at entry time) and in the trip's base currency
+  const curOf=e=>e.currency||BASE();
+  const twdOf=e=>e.amount*(curOf(e)==='TWD'?1:(e.rate||rates[curOf(e)]||0));
+  const baseOf=e=>curOf(e)===BASE()?e.amount:twdOf(e)/(rates[BASE()]||1);
+  const dual=(b,t)=>BASE()==='TWD'?money(t,'TWD'):`${money(b,BASE())}<small>≈ ${money(t,'TWD')}</small>`;
+  function load(){try{return JSON.parse(localStorage.getItem(KEY))||{entries:[]}}catch(e){return {entries:[]}}}
+  function save(d){try{localStorage.setItem(KEY,JSON.stringify(d))}catch(e){alert('瀏覽器無法儲存，請改用一般模式')}}
+  let local=load();
+  const members=()=>(local.members&&local.members.length?local.members:repo.members);
+  function all(){
+    const ids=new Set(repo.expenses.map(e=>e.id));
+    return repo.expenses.map(e=>({...e,synced:true})).concat(local.entries.filter(e=>!ids.has(e.id)).map(e=>({...e,synced:false})));
+  }
+  function fillForm(){
+    const today=new Date().toISOString().slice(0,10);
+    const def=DAYS.some(d=>d[0]===today)?today:'pre';
+    $('exp-date').innerHTML=DAYS.map(d=>`<option value="${d[0]}"${d[0]===def?' selected':''}>${d[1]}</option>`).join('');
+    $('exp-cat').innerHTML=CATS.map(c=>`<option>${c}</option>`).join('');
+    let lastCur=null;try{lastCur=localStorage.getItem(KEY+':cur')}catch(e){}
+    const dc=lastCur||BASE();
+    $('exp-cur').innerHTML=CURS.map(c=>`<option value="${c[0]}"${c[0]===dc?' selected':''}>${c[1]}（${c[0]}）</option>`).join('');
+    const m=members();
+    $('exp-payer').innerHTML=m.map(n=>`<option>${esc(n)}</option>`).join('');
+    $('exp-split').innerHTML=`<button type="button" class="btn ghost sm" id="exp-all">全選</button>`+m.map(n=>`<label><input type="checkbox" value="${esc(n)}">${esc(n)}</label>`).join('');
+    syncAll();fx();
+  }
+  function syncAll(){
+    const cs=[...$('exp-split').querySelectorAll('input')];
+    $('exp-all').textContent=cs.length&&cs.every(c=>c.checked)?'取消全選':'全選';
+  }
+  // live conversion preview under the amount field
+  function fx(){
+    const cur=$('exp-cur').value,a=parseFloat($('exp-amount').value),r=rates[cur];
+    const c=CURS.find(x=>x[0]===cur);
+    $('exp-amount-lbl').textContent='金額（'+c[2]+'）';
+    if(!r){$('exp-fx').textContent='匯率載入中…';return;}
+    const rateTxt=cur==='TWD'?(BASE()==='TWD'?'':`1 ${BASE()} = ${rates[BASE()].toFixed(4)} TWD`):`1 ${cur} = ${r.toFixed(4)} TWD`;
+    if(!(a>0)){$('exp-fx').textContent=rateTxt+(rateNote?`（${rateNote}）`:'');return;}
+    const t=a*r,b=cur===BASE()?a:t/rates[BASE()];
+    $('exp-fx').textContent=`≈ ${cur!==BASE()?money(b,BASE())+'・':''}${money(t,'TWD')}　${rateTxt}`;
+  }
+  function bars(el,map,order){
+    const max=Math.max(1,...Object.values(map).map(v=>v[0]));
+    const keys=order.filter(k=>map[k]&&map[k][0]);
+    el.innerHTML=keys.length?keys.map(k=>`<div class="bar-row"><span>${esc(k)}</span><div class="bar"><span style="width:${map[k][0]/max*100}%"></span></div><span class="amt">${dual(map[k][0],map[k][1])}</span></div>`).join(''):'<div class="exp-empty">尚無資料</div>';
+  }
+  const add=(map,k,b,t)=>{map[k]=map[k]||[0,0];map[k][0]+=b;map[k][1]+=t;};
+  function render(){
+    const key=e=>e.date==='pre'?'0':String(e.date);
+    const list=all().sort((a,b)=>key(a).localeCompare(key(b)));
+    const m=members(),bt=rates[BASE()]||0;
+    let tb=0,tt=0;list.forEach(e=>{tb+=baseOf(e);tt+=twdOf(e)});
+    $('exp-total').innerHTML=dual(tb,tt);
+    $('exp-avg').innerHTML=dual(m.length?tb/m.length:0,m.length?tt/m.length:0);
+    $('exp-count').textContent=list.length;
+    const byCat={},byDay={},paid={},owe={};
+    m.forEach(n=>{paid[n]=0;owe[n]=0});
+    list.forEach(e=>{
+      const b=baseOf(e),t=twdOf(e);
+      add(byCat,e.category,b,t);
+      add(byDay,(DAYS.find(d=>d[0]===e.date)||[0,e.date])[1],b,t);
+      paid[e.payer]=(paid[e.payer]||0)+b;
+      const sp=e.split&&e.split.length?e.split:m;
+      sp.forEach(n=>{owe[n]=(owe[n]||0)+b/sp.length});
+    });
+    bars($('exp-by-cat'),byCat,Array.from(new Set(CATS.concat(Object.keys(byCat)))));
+    bars($('exp-by-day'),byDay,Array.from(new Set(['出發前'].concat(DAYS.map(d=>d[1]),Object.keys(byDay)))));
+    // balances are settled in the base currency; TWD shown at today's rate
+    const people=Array.from(new Set(m.concat(Object.keys(paid),Object.keys(owe))));
+    const bal={};people.forEach(n=>bal[n]=(paid[n]||0)-(owe[n]||0));
+    const d2=b=>dual(b,b*bt);
+    $('exp-balance').innerHTML=people.map(n=>`<tr><td>${esc(n)}</td><td>${d2(paid[n]||0)}</td><td>${d2(owe[n]||0)}</td><td class="${bal[n]>=0.5?'pos':bal[n]<=-0.5?'neg':''}">${bal[n]>=0.5?'+':''}${d2(bal[n])}</td></tr>`).join('');
+    const cr=people.filter(n=>bal[n]>0.5).map(n=>[n,bal[n]]).sort((a,b)=>b[1]-a[1]);
+    const db=people.filter(n=>bal[n]<-0.5).map(n=>[n,-bal[n]]).sort((a,b)=>b[1]-a[1]);
+    const tx=[];let i=0,j=0;
+    while(i<db.length&&j<cr.length){const x=Math.min(db[i][1],cr[j][1]);if(x>=1)tx.push(`${esc(db[i][0])} → ${esc(cr[j][0])}：<strong>${money(x,BASE())}</strong>${BASE()!=='TWD'?`（≈ ${money(x*bt,'TWD')}）`:''}`);db[i][1]-=x;cr[j][1]-=x;if(db[i][1]<0.5)i++;if(cr[j][1]<0.5)j++;}
+    $('exp-settle').innerHTML=tx.length?tx.map(t=>`<li>${t}</li>`).join(''):'<li>目前不需要轉帳</li>';
+    // personal view
+    const meSel=$('exp-me'),prev=meSel.value||(()=>{try{return localStorage.getItem(KEY+':me')}catch(e){return null}})()||repo.me;
+    meSel.innerHTML=people.map(n=>`<option${n===prev?' selected':''}>${esc(n)}</option>`).join('');
+    const me=meSel.value;
+    const sh=[0,0],ow=[0,0],meCat={},mine=[];
+    list.forEach(e=>{
+      const sp=e.split&&e.split.length?e.split:m;
+      if(!sp.includes(me))return;
+      const b=baseOf(e)/sp.length,t=twdOf(e)/sp.length,acc=sp.length===1?ow:sh;
+      acc[0]+=b;acc[1]+=t;
+      add(meCat,e.category,b,t);
+      mine.push([e,b,t]);
+    });
+    $('me-total').innerHTML=dual(sh[0]+ow[0],sh[1]+ow[1]);$('me-shared').innerHTML=dual(sh[0],sh[1]);$('me-own').innerHTML=dual(ow[0],ow[1]);
+    bars($('me-by-cat'),meCat,Array.from(new Set(CATS.concat(Object.keys(meCat)))));
+    $('me-list').innerHTML=mine.length?mine.map(([e,b,t])=>{
+      const dl=(DAYS.find(d=>d[0]===e.date)||[0,e.date])[1];
+      return `<tr><td style="white-space:nowrap">${esc(dl)}</td><td>${esc(e.item)}</td><td>${esc(e.payer)}</td><td style="text-align:right;white-space:nowrap">${dual(b,t)}</td></tr>`;
+    }).join(''):'<tr><td colspan="4" class="exp-empty">沒有和我有關的花費</td></tr>';
+    $('exp-list').innerHTML=list.length?list.map(e=>{
+      const dl=(DAYS.find(d=>d[0]===e.date)||[0,e.date])[1];
+      const sp=e.split&&e.split.length&&e.split.length<m.length?e.split.map(esc).join('、'):'全員';
+      const amt=money(e.amount,curOf(e))+(curOf(e)!=='TWD'?`<small>≈ ${money(twdOf(e),'TWD')}</small>`:'');
+      return `<tr><td style="white-space:nowrap">${esc(dl)}</td><td>${esc(e.item)}${e.note?`<div style="font-size:.72rem;color:var(--mute)">${esc(e.note)}</div>`:''}</td><td>${esc(e.category)}</td><td>${esc(e.payer)}</td><td>${sp}</td><td class="exp-amt" style="text-align:right;white-space:nowrap">${amt}</td><td style="white-space:nowrap">${e.synced?'':`<span class="badge-local">未同步</span> <button class="btn danger sm" data-del="${esc(e.id)}">刪除</button>`}</td></tr>`;
+    }).join(''):'<tr><td colspan="7" class="exp-empty">還沒有花費紀錄</td></tr>';
+  }
+  $('exp-form').addEventListener('submit',function(ev){
+    ev.preventDefault();
+    const cur=$('exp-cur').value;
+    const c=CURS.find(x=>x[0]===cur);
+    const amount=Math.round(parseFloat($('exp-amount').value)*10**c[3])/10**c[3];
+    const item=$('exp-item').value.trim();
+    if(!item||!(amount>0))return;
+    if(!rates[cur]){alert('匯率還沒載入，請稍候再試');return;}
+    const split=[...$('exp-split').querySelectorAll('input:checked')].map(x=>x.value);
+    if(!split.length){alert('至少選一位分攤成員');return;}
+    local.entries.push({id:Date.now().toString(36)+Math.random().toString(36).slice(2,6),date:$('exp-date').value,item,category:$('exp-cat').value,amount,currency:cur,rate:rates[cur],payer:$('exp-payer').value,split:split.length===members().length?[]:split,note:$('exp-note').value.trim()});
+    save(local);
+    $('exp-item').value='';$('exp-amount').value='';$('exp-note').value='';
+    $('exp-split').querySelectorAll('input').forEach(c=>c.checked=false);syncAll();fx();
+    render();
+  });
+  $('exp-cur').addEventListener('change',function(){try{localStorage.setItem(KEY+':cur',this.value)}catch(e){}fx();});
+  $('exp-amount').addEventListener('input',fx);
+  $('exp-split').addEventListener('click',function(ev){
+    if(ev.target.id==='exp-all'){
+      const cs=[...this.querySelectorAll('input')],all=cs.every(c=>c.checked);
+      cs.forEach(c=>c.checked=!all);
+    }
+    syncAll();
+  });
+  $('exp-me').addEventListener('change',function(){try{localStorage.setItem(KEY+':me',this.value)}catch(e){}render();});
+  $('exp-list').addEventListener('click',function(ev){
+    const id=ev.target.dataset&&ev.target.dataset.del;
+    if(!id||!confirm('刪除這筆未同步的紀錄？'))return;
+    local.entries=local.entries.filter(e=>e.id!==id);save(local);render();
+  });
+  $('exp-export').addEventListener('click',function(){
+    const ids=new Set(repo.expenses.map(e=>e.id));
+    const out={trip:'京都',exportedAt:new Date().toISOString(),members:local.members||null,expenses:local.entries.filter(e=>!ids.has(e.id))};
+    if(!out.expenses.length&&!out.members){alert('沒有未同步的紀錄');return;}
+    const a=document.createElement('a');
+    a.href=URL.createObjectURL(new Blob([JSON.stringify(out,null,2)],{type:'application/json'}));
+    a.download='expenses-京都-'+new Date().toISOString().slice(0,10)+'.json';
+    a.click();
+  });
+  $('exp-members').addEventListener('click',function(){
+    const v=prompt('成員名稱（用逗號分隔）',members().join(','));
+    if(v===null)return;
+    const list=v.split(/[,，、]/).map(x=>x.trim()).filter(Boolean);
+    if(!list.length)return;
+    local.members=list;save(local);fillForm();render();
+  });
+  $('exp-clear').addEventListener('click',function(){
+    const ids=new Set(repo.expenses.map(e=>e.id));
+    const n=local.entries.filter(e=>ids.has(e.id)).length;
+    if(!n){alert('沒有已同步的本機紀錄需要清除');return;}
+    if(!confirm('清除 '+n+' 筆已同步到專案的本機紀錄？未同步的會保留。'))return;
+    local.entries=local.entries.filter(e=>!ids.has(e.id));save(local);render();
+  });
+  // live rates (TWD per unit); fall back to expenses.json's fallbackRates
+  const live=fetch('https://open.er-api.com/v6/latest/TWD').then(r=>r.ok?r.json():null).catch(()=>null);
+  fetch('expenses.json',{cache:'no-store'}).then(r=>r.ok?r.json():null).catch(()=>null).then(d=>{
+    if(d){repo.members=d.members||[];repo.expenses=d.expenses||[];repo.me=d.me||null;repo.currency=d.currency||'JPY';
+      const f=d.fallbackRates||{};CURS.forEach(c=>{if(typeof f[c[0]]==='number')rates[c[0]]=f[c[0]]});
+      if(f.date)rateNote=`備用匯率 ${f.date}`;}
+    if(local.members&&JSON.stringify(local.members)===JSON.stringify(repo.members)){delete local.members;save(local);}
+    fillForm();render();
+    return live;
+  }).then(x=>{
+    if(x&&x.result==='success'){
+      CURS.forEach(c=>{if(x.rates[c[0]])rates[c[0]]=1/x.rates[c[0]]});
+      rateNote='即時匯率 '+new Date(x.time_last_update_unix*1000).toISOString().slice(0,10);
+      $('exp-rate-src').textContent=rateNote+'（open.er-api.com）';
+    }else{$('exp-rate-src').textContent=(rateNote||'無匯率')+'（線上匯率抓不到）';}
+    fx();render();
+  });
+})();
 </script>
 </body>
 </html>
